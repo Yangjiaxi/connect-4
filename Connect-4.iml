@@ -1,2 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module type="JAVA_MODULE" version="4" />
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src/main" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resource" type="java-resource" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.hexworks.zircon:zircon.core-jvm:2020.1.0-RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.61" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib:1.3.61" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains:annotations:13.0" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.61" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-reflect:1.3.61" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2" level="project" />
+    <orderEntry type="library" name="Maven: com.github.ben-manes.caffeine:caffeine:2.5.4" level="project" />
+    <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.18" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.25" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-common:1.3.61" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.2" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlinx:kotlinx-collections-immutable-jvm:0.3" level="project" />
+    <orderEntry type="library" name="Maven: org.hexworks.cobalt:cobalt.core-jvm:2020.0.15-PREVIEW" level="project" />
+    <orderEntry type="library" name="Maven: ch.qos.logback:logback-classic:1.2.3" level="project" />
+    <orderEntry type="library" name="Maven: ch.qos.logback:logback-core:1.2.3" level="project" />
+    <orderEntry type="library" name="Maven: com.benasher44:uuid-jvm:0.0.7" level="project" />
+    <orderEntry type="library" name="Maven: org.hexworks.zircon:zircon.jvm.swing:2020.1.0-RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: com.jhlabs:filters:2.0.235-1" level="project" />
+  </component>
+</module>
