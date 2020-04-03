@@ -16,4 +16,15 @@ public class Position {
     public int getRow() {
         return row;
     }
+    
+    //Override equals method for JUnit test case Judging Position Object's value
+    @Override
+    public boolean equals(Object obj) {
+    	if(obj instanceof Position) {
+    		Position p = (Position)obj;
+        	if(this.row == p.row && this.col == p.col)
+        		return true;
+    	}
+    	return false;
+    }
 }
