@@ -2,7 +2,7 @@ package connect4;
 /**
  * 
  * @author Penistrong
- * @description used for categories
+ * @description Boundary Value Test used for categories
  */
 public interface BVT {
 

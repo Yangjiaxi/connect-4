@@ -12,7 +12,7 @@ import org.junit.runner.notification.Failure;
 
 public class BoardTestRunner {
 	public static void main(String[] args) {
-        Result result = JUnitCore.runClasses(BoardTest.class);
+        Result result = JUnitCore.runClasses(BoardTest.class, GridTest.class);
 
         System.out.println("=================== Test Report ===================");
         System.out.println("\033[35;4m" + "Run " + result.getRunCount() + " test cases, Ignore " +

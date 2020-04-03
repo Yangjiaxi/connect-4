@@ -26,6 +26,41 @@ public class BoardTest {
     	testobj = null;
     }
     
+    //测试棋盘格子剩余数是否正确
+    //6*7共42个grid
+    @Category(BVT.class)
+    @Test
+    public void testLeftGridsDecMinEdgev1() {
+    	//尚未落子时棋盘剩余格数
+    	assertEquals(42, testobj.getLeftGrids(), 0);
+    }
+    
+    @Category(BVT.class)
+    @Test
+    public void testLeftGridsDecMinEdgev2() {
+    	//落一子后棋盘剩余格数
+    	testobj.leftGridsDec();
+    	assertEquals(41, testobj.getLeftGrids(), 0);
+    }
+    
+    @Category(BVT.class)
+    @Test
+    public void testLeftGridsDecMaxEdgev1() {
+    	//落子41次后，棋盘剩余格数
+    	for(int i = 0; i<41; i++)
+    		testobj.leftGridsDec();
+    	assertEquals(1, testobj.getLeftGrids(), 0);
+    }
+    
+    @Category(BVT.class)
+    @Test
+    public void testLeftGridsDecMaxEdgev2() {
+    	//落满42子后，棋盘剩余格数
+    	for(int i = 0; i<42; i++)
+    		testobj.leftGridsDec();
+    	assertEquals(0, testobj.getLeftGrids(), 0);
+    }
+    
     @Category(BVT.class)
     @Test
     public void testDropPieceMinEdgev1() {
@@ -50,7 +85,17 @@ public class BoardTest {
     	assertEquals(new Position(0, 0), testobj.dropPiece(GridType.PLAYER_A, 0));
     }
     
-    //测试棋盘能否正确放置棋子
+    //@Ignore
+    @Category(BVT.class)
+    @Test
+    public void testDropPieceMaxEdgev2() {
+    	//在已落满6子的一列再次落子[]
+    	for(int i = 0; i<6; i++)
+    		testobj.dropPiece(GridType.PLAYER_A, 0);
+    	assertNotEquals(new Position(0, 0), testobj.dropPiece(GridType.PLAYER_A, 0));
+    }
+    
+    //测试棋盘能否判断放置棋子的可行性
     @Category(BVT.class)
     @Test
     public void testCanPlaceMinEdgev1() {
@@ -72,7 +117,6 @@ public class BoardTest {
     	assertEquals(false, testobj.canPlace(0));
     }
     
-    //@Ignore
     @Category(BVT.class)
     @Test
     public void testCanPlaceMaxEdgev2() {
