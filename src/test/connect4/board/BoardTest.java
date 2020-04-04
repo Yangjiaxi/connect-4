@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 import connect4.BVT;
+import connect4.EC;
 
 public class BoardTest {
 	
@@ -89,7 +90,7 @@ public class BoardTest {
     @Category(BVT.class)
     @Test
     public void testDropPieceMaxEdgev2() {
-    	//在已落满6子的一列再次落子[]
+    	//在已落满6子的一列再次落子
     	for(int i = 0; i<6; i++)
     		testobj.dropPiece(GridType.PLAYER_A, 0);
     	assertNotEquals(new Position(0, 0), testobj.dropPiece(GridType.PLAYER_A, 0));
@@ -125,4 +126,27 @@ public class BoardTest {
     		testobj.dropPiece(GridType.PLAYER_A, 0);
     	assertEquals(true, testobj.canPlace(0));
     }
+    
+    @Category(EC.class)
+    @Test
+    public void testPlayerPlacePiecesv1() {
+    	//任一方玩家在任一列放置棋子后,对应的棋盘格应正确显示其格子类型(属于何方玩家)
+    	//A在第二列落子，B紧随其后也在第二列落子
+    	testobj.dropPiece(GridType.PLAYER_A, 1);
+    	testobj.dropPiece(GridType.PLAYER_B, 1);
+    	assertEquals(GridType.PLAYER_A, testobj.getGrid(5, 1).getType());
+    	assertEquals(GridType.PLAYER_B, testobj.getGrid(4, 1).getType());
+    }
+    
+    @Category(EC.class)
+    @Test
+    public void testPlayerPlacePiecesv2() {
+    	//未落子的棋盘格应正确显示其格子类型
+    	testobj.dropPiece(GridType.PLAYER_A, 1);
+    	testobj.dropPiece(GridType.PLAYER_B, 5);
+    	assertEquals(GridType.PLAYER_A, testobj.getGrid(5, 1).getType());
+    	assertEquals(GridType.EMPTY, testobj.getGrid(1, 0).getType());
+    	assertEquals(GridType.PLAYER_B, testobj.getGrid(5, 5).getType());
+    }
+    
 }
