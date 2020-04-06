@@ -1,16 +1,18 @@
-package connect4.player;
+package connect4.agent;
 
 import connect4.board.Board;
 import connect4.board.GridType;
 import connect4.board.Position;
+import connect4.player.BasePlayer;
+import connect4.player.HumanPlayer;
 import org.junit.*;
 
 import static org.junit.Assert.assertEquals;
 
 public class AgentTest {
     Agent testObj;
-    Player pa;
-    Player pb;
+    BasePlayer pa;
+    BasePlayer pb;
 
 //    @BeforeClass
 //    public static void beforeClass() throws Exception {
@@ -158,3 +160,4 @@ public class AgentTest {
 
 
 }
+

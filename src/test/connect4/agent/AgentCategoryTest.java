@@ -1,4 +1,4 @@
-package connect4.player;
+package connect4.agent;
 
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
