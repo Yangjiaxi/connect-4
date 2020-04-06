@@ -37,15 +37,6 @@ public class Agent {
         goal = Options.GOAL_TO_WIN;
         playerA = pa;
         playerB = pb;
-
-        installAgent(playerA);
-        installAgent(playerB);
-    }
-
-    private void installAgent(BasePlayer player) {
-        if (player instanceof BaseComputerPlayer) {
-            ((BaseComputerPlayer) player).setAgent(this);
-        }
     }
 
     public Board getBoard() {
@@ -64,6 +55,12 @@ public class Agent {
         return state;
     }
 
+    private void installAgent(BasePlayer player) {
+        if (player instanceof BaseComputerPlayer) {
+            ((BaseComputerPlayer) player).setAgent(this);
+        }
+    }
+
     public void initBoard() {
         board = new Board(Options.BOARD_ROWS, Options.BOARD_COLUMNS);
     }
@@ -73,9 +70,15 @@ public class Agent {
         nextColor = GridType.PLAYER_A;
     }
 
+    public void initPlayer() {
+        installAgent(playerA);
+        installAgent(playerB);
+    }
+
     public void start() {
         initState();
         initBoard();
+        initPlayer();
         stepInto();
     }
 
@@ -249,5 +252,30 @@ public class Agent {
         }
 
         notifyViewComponent();
+    }
+
+    /**
+     * FSM testing
+     *
+     * JUST FOR TESTING
+     *
+     * @param state state to set
+     * @param next next color to set
+     * @author yang
+     */
+    public void pseudoSetState(AgentState state, GridType next) {
+        this.state = state;
+        nextColor = next;
+    }
+
+    /**
+     * FSM testing, fake method
+     *
+     * JUST FOR TESTING
+     *
+     * @author yang
+     */
+    public void pseudoStepInto() {
+        stepInto();
     }
 }
