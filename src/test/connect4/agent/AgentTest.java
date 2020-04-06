@@ -2,6 +2,7 @@ package connect4.agent;
 
 import connect4.BVT;
 import connect4.EC;
+import connect4.LC;
 import connect4.board.Board;
 import connect4.board.GridType;
 import connect4.board.Position;
@@ -44,6 +45,7 @@ public class AgentTest {
         testObj = null;
     }
 
+    //黑盒(?)测试: checkOneDir()
     @Ignore
     @Test(expected=java.lang.NullPointerException.class) //checkOneDir()只有在下子之后才会触发，故未下子时move为空
     public void testCheckOneDir0() {
@@ -463,11 +465,115 @@ public class AgentTest {
         assertFalse(testObj.checkOneDir(lastMove,1,1,GridType.PLAYER_B));
     }
 
-    @Test
-    public void testReportInput1() {
+    //白盒测试: checkBoard()
+    //对判定的测试
+    @Ignore
+    @Test(expected=java.lang.NullPointerException.class) //checkBoard()只有在下子之后才会触发，故未下子时lastMove为空
+    //未下子时,游戏尚未结束,board状态为初始值(ready)
+    public void testCheckBoard0() {
+        testObj.checkBoard(GridType.PLAYER_A,null);
+        assertEquals(testObj.getState(),AgentState.READY);
+        testObj.checkBoard(GridType.PLAYER_B,null);
+        assertEquals(testObj.getState(),AgentState.READY);
     }
 
+    @Category(LC.class)
+    @Test
+    public void testCheckBoard1() {
+        //一方落下某子后,游戏尚未结束(ready)
+        Board innerBoard = testObj.getBoard();
 
+        innerBoard.dropPiece(GridType.PLAYER_A, 0);
+        innerBoard.dropPiece(GridType.PLAYER_B, 1);
+        innerBoard.dropPiece(GridType.PLAYER_A, 2);
+        Position lastMove = innerBoard.dropPiece(GridType.PLAYER_B, 3);
+
+        testObj.checkBoard(GridType.PLAYER_B,lastMove);
+        assertEquals(testObj.getState(),AgentState.READY);
+    }
+
+    @Category(LC.class)
+    @Test
+    public void testCheckBoard2() {
+        //一方落下某子后,横向识别出结束条件,游戏结束(win)
+        Board innerBoard = testObj.getBoard();
+
+        innerBoard.dropPiece(GridType.PLAYER_A, 3);
+        innerBoard.dropPiece(GridType.PLAYER_B, 3);
+        innerBoard.dropPiece(GridType.PLAYER_A, 1);
+        innerBoard.dropPiece(GridType.PLAYER_B, 1);
+        innerBoard.dropPiece(GridType.PLAYER_A, 2);
+        innerBoard.dropPiece(GridType.PLAYER_B, 2);
+
+        Position lastMove = innerBoard.dropPiece(GridType.PLAYER_A, 0);
+
+        testObj.checkBoard(GridType.PLAYER_A,lastMove);
+        assertEquals(testObj.getState(),AgentState.WIN);
+    }
+
+    @Category(LC.class)
+    @Test
+    public void testCheckBoard3() {
+        //一方落下某子后,纵向识别出结束条件,游戏结束(win)
+        Board innerBoard = testObj.getBoard();
+
+        innerBoard.dropPiece(GridType.PLAYER_A, 0);
+        innerBoard.dropPiece(GridType.PLAYER_B, 1);
+        innerBoard.dropPiece(GridType.PLAYER_A, 0);
+        innerBoard.dropPiece(GridType.PLAYER_B, 1);
+        innerBoard.dropPiece(GridType.PLAYER_A, 0);
+        innerBoard.dropPiece(GridType.PLAYER_B, 1);
+        Position lastMove = innerBoard.dropPiece(GridType.PLAYER_A, 0);
+
+        testObj.checkBoard(GridType.PLAYER_A,lastMove);
+        assertEquals(testObj.getState(),AgentState.WIN);
+    }
+
+    @Category(LC.class)
+    @Test
+    public void testCheckBoard4() {
+        //一方落下某子后,斜向(仰斜)识别出结束条件,游戏结束(win)
+        Board innerBoard = testObj.getBoard();
+
+        innerBoard.dropPiece(GridType.PLAYER_A, 0);
+        innerBoard.dropPiece(GridType.PLAYER_B, 1);
+        innerBoard.dropPiece(GridType.PLAYER_A, 2);
+        innerBoard.dropPiece(GridType.PLAYER_B, 3);
+        innerBoard.dropPiece(GridType.PLAYER_A, 1);
+        innerBoard.dropPiece(GridType.PLAYER_B, 2);
+        innerBoard.dropPiece(GridType.PLAYER_A, 2);
+        innerBoard.dropPiece(GridType.PLAYER_B, 3);
+        innerBoard.dropPiece(GridType.PLAYER_A, 3);
+        innerBoard.dropPiece(GridType.PLAYER_B, 0);
+        Position lastMove = innerBoard.dropPiece(GridType.PLAYER_A, 3);
+
+        testObj.checkBoard(GridType.PLAYER_A,lastMove);
+        assertEquals(testObj.getState(),AgentState.WIN);
+    }
+
+    @Category(LC.class)
+    @Test
+    public void testCheckBoard5() {
+        //一方落下某子后,斜向(俯斜)识别出结束条件,游戏结束(win)
+        Board innerBoard = testObj.getBoard();
+
+        innerBoard.dropPiece(GridType.PLAYER_A, 6);
+        innerBoard.dropPiece(GridType.PLAYER_B, 5);
+        innerBoard.dropPiece(GridType.PLAYER_A, 4);
+        innerBoard.dropPiece(GridType.PLAYER_B, 3);
+        innerBoard.dropPiece(GridType.PLAYER_A, 3);
+        innerBoard.dropPiece(GridType.PLAYER_B, 4);
+        innerBoard.dropPiece(GridType.PLAYER_A, 5);
+        innerBoard.dropPiece(GridType.PLAYER_B, 6);
+        innerBoard.dropPiece(GridType.PLAYER_A, 6);
+        innerBoard.dropPiece(GridType.PLAYER_B, 5);
+        innerBoard.dropPiece(GridType.PLAYER_A, 4);
+        innerBoard.dropPiece(GridType.PLAYER_B, 3);
+        Position lastMove = innerBoard.dropPiece(GridType.PLAYER_A, 3);
+
+        testObj.checkBoard(GridType.PLAYER_A,lastMove);
+        assertEquals(testObj.getState(),AgentState.WIN);
+    }
 
 }
 

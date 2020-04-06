@@ -14,8 +14,9 @@ import org.junit.runners.Suite;
 
 @RunWith(Categories.class)
 //@Categories.IncludeCategory(BVT.class)
-@Categories.IncludeCategory(EC.class)
-//@Categories.ExcludeCategory({IPT.class, LC.class})
+//@Categories.IncludeCategory(EC.class)
+@Categories.IncludeCategory(LC.class)
+//@Categories.IncludeCategory(IPT.class)
 @Suite.SuiteClasses(AgentTest.class)
 public class AgentCategoryTest {
 }
