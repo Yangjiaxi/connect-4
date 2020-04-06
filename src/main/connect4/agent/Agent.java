@@ -16,7 +16,27 @@ import java.util.ArrayList;
  * Driver of logic
  * <p>
  * Agent contains a FSM(finite state machine)
- * states:
+ * transfers and states:
+ * <p>
+ * READY, WAITING_HUMAN, WAITING_COMPUTER, WIN, NO_WIN,
+ * <p>
+ * {READY} [INIT]:
+ * [WHEN] #LeftGrids <= 0
+ * [TO] {NO_WIN} [STOP]
+ * [WHEN] is instance of BaseComputerPlayer
+ * [TO] {WAITING_COMPUTER}
+ * [DO] ask computer for next move
+ * [WHEN] is instance of HumanPlayer
+ * [TO] {WAITING_HUMAN}
+ * [DO] wait for UI input
+ * {WAITING_COMPUTER} / {WAITING_HUMAN}
+ * [WHEN] trigger report input
+ * [DO] check board situation
+ * [WHEN] not winning yet
+ * [TO] {READY}
+ * [DO] switch player
+ * [WHEN] winner judged
+ * [TO] {WIN} [STOP]
  *
  * @author yang
  * @see AgentState
@@ -237,10 +257,10 @@ public class Agent {
      */
     private void stepInto() {
         BasePlayer player = getCurrentPlayer();
+        if (board.getLeftGrids() <= 0) {
+            state = AgentState.NO_WIN;
+        }
         if (state == AgentState.READY) {
-            if (board.getLeftGrids() <= 0) {
-                state = AgentState.NO_WIN;
-            }
             if (player instanceof BaseComputerPlayer) {
                 state = AgentState.WAITING_COMPUTER;
                 ((BaseComputerPlayer) player).askNext(board);
