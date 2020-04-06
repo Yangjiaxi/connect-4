@@ -35,6 +35,8 @@ public class Agent {
         return board.getGrid(row, col);
     }
 
+    public Board getBoard() { return board; }
+
     public GridType getActivePlayer() {
         return nextColor;
     }
@@ -148,4 +150,6 @@ public class Agent {
 
         view.updateComponents();
     }
+
+
 }
