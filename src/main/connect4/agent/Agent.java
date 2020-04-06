@@ -1,14 +1,14 @@
 package connect4.agent;
 
+import connect4.Options;
 import connect4.board.Board;
 import connect4.board.Grid;
 import connect4.board.GridType;
 import connect4.board.Position;
-import connect4.player.HumanPlayer;
 import connect4.player.BasePlayer;
+import connect4.player.HumanPlayer;
 import connect4.player.computerplayer.BaseComputerPlayer;
 import connect4.render.view.GameView;
-import connect4.Options;
 
 import java.util.ArrayList;
 
@@ -256,11 +256,11 @@ public class Agent {
 
     /**
      * FSM testing
-     *
+     * <p>
      * JUST FOR TESTING
      *
      * @param state state to set
-     * @param next next color to set
+     * @param next  next color to set
      * @author yang
      */
     public void pseudoSetState(AgentState state, GridType next) {
@@ -270,7 +270,7 @@ public class Agent {
 
     /**
      * FSM testing, fake method
-     *
+     * <p>
      * JUST FOR TESTING
      *
      * @author yang

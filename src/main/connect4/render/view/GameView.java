@@ -108,7 +108,7 @@ public class GameView extends BaseView {
     }
 
     public void updateComponents() {
-        action.setText(strCenter(stateToText(agent.getState()), UiGlobal.ACTION_LABEL_WIDTH));
+        action.setText(strCenter(stateToText(agent.getState()), UiGlobal.ACTION_TEXT_WIDTH, '>', '<'));
 
         player.setText(String.valueOf(gridTypeToChar(agent.getActivePlayer())));
         player.setComponentStyleSet(colorToFontStyle(gridTypeToColor(agent.getActivePlayer())));
