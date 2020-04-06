@@ -7,6 +7,7 @@ import org.hexworks.zircon.api.SwingApplications;
 import org.hexworks.zircon.api.application.AppConfig;
 import org.hexworks.zircon.api.builder.component.ButtonBuilder;
 import org.hexworks.zircon.api.color.ANSITileColor;
+import org.hexworks.zircon.api.color.TileColor;
 import org.hexworks.zircon.api.component.ColorTheme;
 import org.hexworks.zircon.api.component.ComponentStyleSet;
 import org.hexworks.zircon.api.data.Size;
@@ -20,7 +21,7 @@ import static org.hexworks.zircon.api.color.TileColor.transparent;
 
 /**
  * @author yang
- *
+ * <p>
  * Global conf of UI
  */
 public class UiGlobal {
@@ -36,6 +37,8 @@ public class UiGlobal {
      * Size of disc
      */
     public static int UNIT_SIZE = 3;
+
+    public static int ACTION_LABEL_WIDTH = 15;
 
     public static ColorTheme THEME_ORIGIN = ColorThemes.techLight();
     public static ColorTheme THEME_AFTER = ColorThemes.gamebookers();
@@ -63,9 +66,17 @@ public class UiGlobal {
                 .build());
     }
 
+    public static StyleSet colorToSingleStyle(TileColor foreground) {
+        return colorToSingleStyle(foreground, transparent());
+    }
+
+    public static StyleSet colorToSingleStyle(TileColor foreground, TileColor background) {
+        return StyleSet.create(foreground, background, new HashSet<>());
+    }
+
     public static ComponentStyleSet colorToFontStyle(ANSITileColor color) {
         return ComponentStyleSet.newBuilder()
-                .withDefaultStyle(StyleSet.create(color, transparent(), new HashSet<>()))
+                .withDefaultStyle(colorToSingleStyle(color))
                 .build();
     }
 

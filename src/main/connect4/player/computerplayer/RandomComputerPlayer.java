@@ -12,10 +12,12 @@ import java.util.Random;
  *
  * @author tian
  */
+import static connect4.Options.COMPUTE_SLEEP_TIME_MAX_MS;
+import static connect4.Utils.randomInt;
+
 public class RandomComputerPlayer extends BaseComputerPlayer {
 
-    @Override
-    public int askNext(Board board) {
+    private int innerGetNext(Board board) {
         ArrayList<Integer> columns = new ArrayList<>();
         for (int j = 0; j < board.getCols(); ++j) {
             if (board.canPlace(j)) {
@@ -23,5 +25,18 @@ public class RandomComputerPlayer extends BaseComputerPlayer {
             }
         }
         return columns.get(new Random().nextInt(columns.size()));
+    }
+
+    @Override
+    public void askNext(Board board) {
+        Thread thread = new Thread(() -> {
+            try {
+                Thread.sleep(randomInt(COMPUTE_SLEEP_TIME_MAX_MS));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            agent.reportInput(innerGetNext(board));
+        });
+        thread.start();
     }
 }
