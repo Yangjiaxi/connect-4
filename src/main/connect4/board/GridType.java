@@ -2,6 +2,8 @@ package connect4.board;
 
 
 /**
+ * Type of one grid
+ *
  * @author yang
  */
 

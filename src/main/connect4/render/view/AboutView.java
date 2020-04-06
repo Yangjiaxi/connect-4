@@ -1,6 +1,6 @@
 package connect4.render.view;
 
-import connect4.render.UIGlobal;
+import connect4.render.UiGlobal;
 import org.hexworks.zircon.api.Components;
 import org.hexworks.zircon.api.component.Button;
 import org.hexworks.zircon.api.component.ColorTheme;
@@ -15,6 +15,11 @@ import static org.hexworks.zircon.api.ComponentDecorations.box;
 import static org.hexworks.zircon.api.color.ANSITileColor.BRIGHT_RED;
 
 
+/**
+ * View: About us
+ *
+ * @author yang
+ */
 public class AboutView extends BaseView {
     public Button backButton;
 
@@ -29,7 +34,7 @@ public class AboutView extends BaseView {
                 .withAlignmentWithin(getScreen(), ComponentAlignment.TOP_CENTER)
                 .build();
 
-        backButton = UIGlobal.makeColoredButton("BACK", BRIGHT_RED)
+        backButton = UiGlobal.makeColoredButton("BACK", BRIGHT_RED)
                 .withAlignmentWithin(getScreen(), ComponentAlignment.BOTTOM_RIGHT)
                 .build();
 

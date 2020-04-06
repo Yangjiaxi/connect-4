@@ -1,6 +1,6 @@
 package connect4.render.view;
 
-import connect4.render.UIGlobal;
+import connect4.render.UiGlobal;
 import org.hexworks.zircon.api.Components;
 import org.hexworks.zircon.api.component.*;
 import org.hexworks.zircon.api.graphics.BoxType;
@@ -11,6 +11,11 @@ import org.jetbrains.annotations.NotNull;
 import static org.hexworks.zircon.api.ComponentDecorations.box;
 import static org.hexworks.zircon.api.color.ANSITileColor.*;
 
+/**
+ * View: Welcome
+ *
+ * @author yang
+ */
 
 public class WelcomeView extends BaseView {
     public Button newGameButton;
@@ -41,15 +46,15 @@ public class WelcomeView extends BaseView {
                 .withPosition(9, 6)
                 .build();
 
-        newGameButton = UIGlobal.makeColoredButton("START", BRIGHT_GREEN)
+        newGameButton = UiGlobal.makeColoredButton("START", BRIGHT_GREEN)
                 .withPosition(2, 8)
                 .build();
 
-        aboutButton = UIGlobal.makeColoredButton("ABOUT", BRIGHT_YELLOW)
+        aboutButton = UiGlobal.makeColoredButton("ABOUT", BRIGHT_YELLOW)
                 .withPosition(2, 11)
                 .build();
 
-        exitButton = UIGlobal.makeColoredButton("LEAVE", BRIGHT_RED)
+        exitButton = UiGlobal.makeColoredButton("LEAVE", BRIGHT_RED)
                 .withPosition(2, 17)
                 .build();
 

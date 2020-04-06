@@ -12,6 +12,15 @@ import connect4.Options;
 
 import java.util.ArrayList;
 
+/**
+ * Driver of logic
+ * <p>
+ * Agent contains a FSM(finite state machine)
+ * states:
+ *
+ * @author yang
+ * @see AgentState
+ */
 public class Agent {
     private final Board board;
 
@@ -64,6 +73,26 @@ public class Agent {
                 && col >= 0 && col < board.getCols();
     }
 
+    /**
+     * check whether the last move forms a winning state in certain direction
+     * <p>
+     * direction is specified by dRow and dCol
+     * <p>
+     * (dRow, dCol):
+     * - Horizontal : (0, 1)
+     * - Vertical   : (1, 0)
+     * - 1st Diag   : (1, 1)
+     * - 2nd Diag   : (-1 ,1)
+     * <p>
+     * if goal is reached, discs will be marked as `inWinTrace`
+     *
+     * @param move Position of last move
+     * @param dRow {0, -1, 1}
+     * @param dCol {0, -1, 1}
+     * @param type who makes the last move
+     * @return is reached the goal?
+     * @author luo
+     */
     public boolean checkOneDir(Position move, int dRow, int dCol, GridType type) {
         int count = 0;
         ArrayList<Position> tmpTrace = new ArrayList<>();
@@ -106,6 +135,16 @@ public class Agent {
 
     }
 
+    /**
+     * check the board:
+     * 1. is the last move forms a winning state
+     * 2. if so, switch the FSM to `WINNING`
+     * 3. if not, switch the FSM for next player
+     *
+     * @param gridType player's type of last move
+     * @param lastMove position of last move
+     * @author luo
+     */
     public void checkBoard(GridType gridType, Position lastMove) {
         boolean horizontal = checkOneDir(lastMove, 0, 1, gridType);
         boolean vertical = checkOneDir(lastMove, 1, 0, gridType);
@@ -135,6 +174,12 @@ public class Agent {
         stepInto();
     }
 
+    /**
+     * core of FSM
+     *
+     * @author chengli
+     * @see AgentState
+     */
     private void stepInto() {
         BasePlayer player = nextColor == GridType.PLAYER_A ? player_A : player_B;
         if (state == AgentState.READY) {

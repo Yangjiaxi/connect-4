@@ -5,6 +5,13 @@ import connect4.board.Board;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Random computer player
+ *
+ * generate next move by `Random.nextInt`
+ *
+ * @author tian
+ */
 public class RandomComputerPlayer extends BaseComputerPlayer {
 
     @Override
