@@ -1,22 +1,25 @@
 package connect4.board;
 
+/**
+ * @author chen
+ * <p>
+ * Board is the data holder of this game
+ */
 public class Board {
-    private Grid[][] data;
-    private int rows, cols;
-
-    private boolean isFinished;
+    private final Grid[][] data;
+    private final int rows, cols;
 
     private int leftGrids;
 
-    public Board(int n_row, int n_col) {
-        rows = n_row;
-        cols = n_col;
-        leftGrids = n_row * n_col;
-        isFinished = false;
-        data = new Grid[n_row][n_col];
+    public Board(int nRow, int nCol) {
+        rows = nRow;
+        cols = nCol;
+        leftGrids = nRow * nCol;
+        data = new Grid[nRow][nCol];
         for (int i = 0; i < this.rows; ++i) {
-            for (int j = 0; j < this.cols; ++j)
+            for (int j = 0; j < this.cols; ++j) {
                 data[i][j] = new Grid();
+            }
         }
     }
 
@@ -75,6 +78,7 @@ public class Board {
                     case PLAYER_B:
                         System.out.print(" O");
                         break;
+                    default:
                 }
             }
             System.out.println();

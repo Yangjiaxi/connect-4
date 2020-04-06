@@ -56,6 +56,7 @@ public class MainFrame {
                 case "c":
                     game.loadGame(PlayerBMode.MiniMax);
                     break;
+                default:
             }
             game.dock();
             return UIEventResponse.processed();

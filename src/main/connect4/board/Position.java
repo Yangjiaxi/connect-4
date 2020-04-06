@@ -1,5 +1,9 @@
 package connect4.board;
 
+/**
+ * @author chen
+ * Coordinate
+ */
 public class Position {
     int row;
     int col;
@@ -16,15 +20,17 @@ public class Position {
     public int getRow() {
         return row;
     }
-    
-    //Override equals method for JUnit test case Judging Position Object's value
+
+    /** Override equals method for JUnit test case Judging Position Object's value
+     * @param obj object
+     * @return equals or not
+     */
     @Override
     public boolean equals(Object obj) {
-    	if(obj instanceof Position) {
-    		Position p = (Position)obj;
-        	if(this.row == p.row && this.col == p.col)
-        		return true;
-    	}
-    	return false;
+        if (obj instanceof Position) {
+            Position p = (Position) obj;
+            return this.row == p.row && this.col == p.col;
+        }
+        return false;
     }
 }

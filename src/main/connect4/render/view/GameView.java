@@ -1,6 +1,8 @@
 package connect4.render.view;
 
 import connect4.Options;
+import connect4.agent.Agent;
+import connect4.agent.AgentState;
 import connect4.board.Grid;
 import connect4.board.GridType;
 import connect4.player.*;
@@ -121,6 +123,7 @@ public class GameView extends BaseView {
                 return "WINNER";
             case NO_WIN:
                 return "NO WINNER";
+            default:
         }
         return "BUG :P";
     }
@@ -133,6 +136,7 @@ public class GameView extends BaseView {
                 return colorToFontStyle(BRIGHT_YELLOW);
             case PLAYER_B:
                 return colorToFontStyle(BRIGHT_BLUE);
+            default:
         }
         return colorToFontStyle(BRIGHT_WHITE);
     }
@@ -152,6 +156,7 @@ public class GameView extends BaseView {
                 return "X";
             case PLAYER_B:
                 return "O";
+            default:
         }
         return " ";
     }
@@ -192,6 +197,7 @@ public class GameView extends BaseView {
             case MiniMax:
                 agent = new Agent(new HumanPlayer(), new RandomComputerPlayer());
                 break;
+            default:
         }
     }
 }

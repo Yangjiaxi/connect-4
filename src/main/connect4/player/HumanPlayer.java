@@ -1,4 +1,4 @@
 package connect4.player;
 
-public class HumanPlayer extends Player {
+public class HumanPlayer extends BasePlayer {
 }
