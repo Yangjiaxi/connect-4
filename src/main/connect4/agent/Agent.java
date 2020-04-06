@@ -1,29 +1,39 @@
-package connect4.player;
+package connect4.agent;
 
 import connect4.board.Board;
 import connect4.board.Grid;
 import connect4.board.GridType;
 import connect4.board.Position;
-import connect4.player.computerplayer.ComputerPlayer;
+import connect4.player.HumanPlayer;
+import connect4.player.BasePlayer;
+import connect4.player.computerplayer.BaseComputerPlayer;
 import connect4.render.view.GameView;
 import connect4.Options;
 
 import java.util.ArrayList;
 
+/**
+ * Driver of logic
+ * <p>
+ * Agent contains a FSM(finite state machine)
+ * states:
+ *
+ * @author yang
+ * @see AgentState
+ */
 public class Agent {
     private final Board board;
 
-    private final Player player_A;
-    private final Player player_B;
+    private final BasePlayer player_A;
+    private final BasePlayer player_B;
     private GridType nextColor;
 
     private final int goal;
 
-    //    AgentState state = AgentState.A_STEP;
     private AgentState state;
     private GameView view;
 
-    public Agent(Player pa, Player pb) {
+    public Agent(BasePlayer pa, BasePlayer pb) {
         board = new Board(Options.BOARD_ROWS, Options.BOARD_COLUMNS);
 
         goal = Options.GOAL_TO_WIN;
@@ -55,7 +65,7 @@ public class Agent {
         stepInto();
     }
 
-    private Position doComputerStep(ComputerPlayer player, GridType type) {
+    private Position doComputerStep(BaseComputerPlayer player, GridType type) {
         int decide = player.askNext(board);
         return board.dropPiece(type, decide);
     }
@@ -65,6 +75,26 @@ public class Agent {
                 && col >= 0 && col < board.getCols();
     }
 
+    /**
+     * check whether the last move forms a winning state in certain direction
+     * <p>
+     * direction is specified by dRow and dCol
+     * <p>
+     * (dRow, dCol):
+     * - Horizontal : (0, 1)
+     * - Vertical   : (1, 0)
+     * - 1st Diag   : (1, 1)
+     * - 2nd Diag   : (-1 ,1)
+     * <p>
+     * if goal is reached, discs will be marked as `inWinTrace`
+     *
+     * @param move Position of last move
+     * @param dRow {0, -1, 1}
+     * @param dCol {0, -1, 1}
+     * @param type who makes the last move
+     * @return is reached the goal?
+     * @author luo
+     */
     public boolean checkOneDir(Position move, int dRow, int dCol, GridType type) {
         int count = 0;
         ArrayList<Position> tmpTrace = new ArrayList<>();
@@ -73,7 +103,9 @@ public class Agent {
 
         // increment direction
         while (validPosition(tmpRow, tmpCol)) {
-            if (!getGrid(tmpRow, tmpCol).getType().equals(type)) break;
+            if (!getGrid(tmpRow, tmpCol).getType().equals(type)) {
+                break;
+            }
             tmpTrace.add(new Position(tmpRow, tmpCol));
             tmpRow += dRow;
             tmpCol += dCol;
@@ -85,7 +117,9 @@ public class Agent {
         tmpCol = move.getCol() - dCol;
 
         while (validPosition(tmpRow, tmpCol)) {
-            if (!getGrid(tmpRow, tmpCol).getType().equals(type)) break;
+            if (!getGrid(tmpRow, tmpCol).getType().equals(type)) {
+                break;
+            }
             tmpTrace.add(new Position(tmpRow, tmpCol));
             tmpRow -= dRow;
             tmpCol -= dCol;
@@ -103,6 +137,16 @@ public class Agent {
 
     }
 
+    /**
+     * check the board:
+     * 1. is the last move forms a winning state
+     * 2. if so, switch the FSM to `WINNING`
+     * 3. if not, switch the FSM for next player
+     *
+     * @param gridType player's type of last move
+     * @param lastMove position of last move
+     * @author luo
+     */
     public void checkBoard(GridType gridType, Position lastMove) {
         boolean horizontal = checkOneDir(lastMove, 0, 1, gridType);
         boolean vertical = checkOneDir(lastMove, 1, 0, gridType);
@@ -122,7 +166,9 @@ public class Agent {
         if (state != AgentState.WAITING) {
             return;
         }
-        if (!board.canPlace(column)) return;
+        if (!board.canPlace(column)) {
+            return;
+        }
 
         Position lastMove = board.dropPiece(nextColor, column);
         checkBoard(nextColor, lastMove);
@@ -130,14 +176,20 @@ public class Agent {
         stepInto();
     }
 
+    /**
+     * core of FSM
+     *
+     * @author chengli
+     * @see AgentState
+     */
     private void stepInto() {
-        Player player = nextColor == GridType.PLAYER_A ? player_A : player_B;
+        BasePlayer player = nextColor == GridType.PLAYER_A ? player_A : player_B;
         if (state == AgentState.READY) {
             if (board.getLeftGrids() <= 0) {
                 state = AgentState.NO_WIN;
             }
-            if (player instanceof ComputerPlayer) {
-                Position lastMove = doComputerStep((ComputerPlayer) player, nextColor);
+            if (player instanceof BaseComputerPlayer) {
+                Position lastMove = doComputerStep((BaseComputerPlayer) player, nextColor);
                 checkBoard(nextColor, lastMove);
                 view.updateComponents();
                 stepInto();

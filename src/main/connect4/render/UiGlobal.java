@@ -18,16 +18,30 @@ import java.util.HashSet;
 import static org.hexworks.zircon.api.ComponentDecorations.box;
 import static org.hexworks.zircon.api.color.TileColor.transparent;
 
-public class UIGlobal {
-    public static int FRAME_HEIGHT = 24; // 24
-    public static int FRAME_WIDTH = 27; // 27
+/**
+ * @author yang
+ *
+ * Global conf of UI
+ */
+public class UiGlobal {
+    /**
+     * Height of window
+     */
+    public static int FRAME_HEIGHT = 24;
+    /**
+     * Width of window
+     */
+    public static int FRAME_WIDTH = 27;
+    /**
+     * Size of disc
+     */
     public static int UNIT_SIZE = 3;
 
     public static ColorTheme THEME_ORIGIN = ColorThemes.techLight();
     public static ColorTheme THEME_AFTER = ColorThemes.gamebookers();
 
-//    public static ColorTheme THEME_ORIGIN = ColorThemes.solarizedDarkBlue();
-//    public static ColorTheme THEME_AFTER = ColorThemes.techLight();
+    // public static ColorTheme THEME_ORIGIN = ColorThemes.solarizedDarkBlue();
+    // public static ColorTheme THEME_AFTER = ColorThemes.techLight();
 
     public static Size GRID_SIZE = Size.create(FRAME_WIDTH, FRAME_HEIGHT);
 
@@ -50,7 +64,7 @@ public class UIGlobal {
     }
 
     public static ComponentStyleSet colorToFontStyle(ANSITileColor color) {
-         return ComponentStyleSet.newBuilder()
+        return ComponentStyleSet.newBuilder()
                 .withDefaultStyle(StyleSet.create(color, transparent(), new HashSet<>()))
                 .build();
     }

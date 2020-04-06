@@ -1,8 +1,7 @@
 package connect4.render.view;
 
-import connect4.render.UIGlobal;
+import connect4.render.UiGlobal;
 import org.hexworks.zircon.api.Components;
-import org.hexworks.zircon.api.Maybes;
 import org.hexworks.zircon.api.component.*;
 import org.hexworks.zircon.api.graphics.BoxType;
 import org.hexworks.zircon.api.grid.TileGrid;
@@ -15,6 +14,11 @@ import static org.hexworks.zircon.api.Components.*;
 import static org.hexworks.zircon.api.color.ANSITileColor.BRIGHT_GREEN;
 import static org.hexworks.zircon.api.color.ANSITileColor.BRIGHT_RED;
 
+/**
+ * View: Select Player B
+ *
+ * @author yang
+ */
 
 public class SelectView extends BaseView {
 
@@ -33,7 +37,7 @@ public class SelectView extends BaseView {
                 .withAlignmentWithin(getScreen(), ComponentAlignment.TOP_CENTER)
                 .build();
 
-        backButton = UIGlobal.makeColoredButton("BACK", BRIGHT_RED)
+        backButton = UiGlobal.makeColoredButton("BACK", BRIGHT_RED)
                 .withAlignmentWithin(getScreen(), ComponentAlignment.BOTTOM_RIGHT)
                 .build();
 
@@ -66,7 +70,7 @@ public class SelectView extends BaseView {
 
         getScreen().addComponent(radioBox);
 
-        startButton = UIGlobal.makeColoredButton("START", BRIGHT_GREEN)
+        startButton = UiGlobal.makeColoredButton("START", BRIGHT_GREEN)
                 .withAlignmentAround(radioBox, ComponentAlignment.BOTTOM_CENTER)
                 .build();
 

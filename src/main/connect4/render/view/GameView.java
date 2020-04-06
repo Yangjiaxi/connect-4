@@ -1,11 +1,13 @@
 package connect4.render.view;
 
 import connect4.Options;
+import connect4.agent.Agent;
+import connect4.agent.AgentState;
 import connect4.board.Grid;
 import connect4.board.GridType;
 import connect4.player.*;
 import connect4.player.computerplayer.RandomComputerPlayer;
-import connect4.render.UIGlobal;
+import connect4.render.UiGlobal;
 import org.hexworks.zircon.api.component.*;
 import org.hexworks.zircon.api.graphics.BoxType;
 import org.hexworks.zircon.api.grid.TileGrid;
@@ -14,10 +16,16 @@ import org.hexworks.zircon.api.uievent.UIEventResponse;
 import org.hexworks.zircon.api.view.base.BaseView;
 import org.jetbrains.annotations.NotNull;
 
-import static connect4.render.UIGlobal.colorToFontStyle;
+import static connect4.render.UiGlobal.colorToFontStyle;
 import static org.hexworks.zircon.api.ComponentDecorations.*;
 import static org.hexworks.zircon.api.Components.*;
 import static org.hexworks.zircon.api.color.ANSITileColor.*;
+
+/**
+ * View: Gaming
+ *
+ * @author yang
+ */
 
 public class GameView extends BaseView {
 
@@ -37,9 +45,9 @@ public class GameView extends BaseView {
         rows = Options.BOARD_ROWS;
         goal = Options.GOAL_TO_WIN;
 
-        int areaHeight = rows * (UIGlobal.UNIT_SIZE - 1) + 1;
-        int padTop = (UIGlobal.FRAME_HEIGHT - areaHeight) / 2;
-        int padLeft = (UIGlobal.FRAME_WIDTH - UIGlobal.UNIT_SIZE * cols) / 2;
+        int areaHeight = rows * (UiGlobal.UNIT_SIZE - 1) + 1;
+        int padTop = (UiGlobal.FRAME_HEIGHT - areaHeight) / 2;
+        int padLeft = (UiGlobal.FRAME_WIDTH - UiGlobal.UNIT_SIZE * cols) / 2;
 
         action = label().withSize(11, 3)
                 .withDecorations(box(BoxType.LEFT_RIGHT_DOUBLE))
@@ -50,14 +58,14 @@ public class GameView extends BaseView {
                 .withText(" ")
                 .withDecorations(box(BoxType.LEFT_RIGHT_DOUBLE))
                 .withSize(3, 3)
-                .withPosition(padLeft + UIGlobal.UNIT_SIZE * cols - 3,
+                .withPosition(padLeft + UiGlobal.UNIT_SIZE * cols - 3,
                         padTop - 3)
                 .build();
 
         getScreen().addComponent(action);
         getScreen().addComponent(player);
 
-        backButton = UIGlobal.makeColoredButton("BACK", BRIGHT_RED)
+        backButton = UiGlobal.makeColoredButton("BACK", BRIGHT_RED)
                 .withAlignmentWithin(getScreen(), ComponentAlignment.BOTTOM_CENTER)
                 .build();
         getScreen().addComponent(backButton);
@@ -66,9 +74,9 @@ public class GameView extends BaseView {
 
         for (int i = 0; i < cols; ++i) {
             columns[i] = vbox()
-                    .withSize(UIGlobal.UNIT_SIZE, areaHeight)
+                    .withSize(UiGlobal.UNIT_SIZE, areaHeight)
                     .withDecorations(box(BoxType.SINGLE))
-                    .withPosition(padLeft + i * UIGlobal.UNIT_SIZE, padTop)
+                    .withPosition(padLeft + i * UiGlobal.UNIT_SIZE, padTop)
                     .build();
             getScreen().addComponent(columns[i]);
         }
@@ -121,6 +129,7 @@ public class GameView extends BaseView {
                 return "WINNER";
             case NO_WIN:
                 return "NO WINNER";
+            default:
         }
         return "BUG :P";
     }
@@ -133,6 +142,7 @@ public class GameView extends BaseView {
                 return colorToFontStyle(BRIGHT_YELLOW);
             case PLAYER_B:
                 return colorToFontStyle(BRIGHT_BLUE);
+            default:
         }
         return colorToFontStyle(BRIGHT_WHITE);
     }
@@ -152,6 +162,7 @@ public class GameView extends BaseView {
                 return "X";
             case PLAYER_B:
                 return "O";
+            default:
         }
         return " ";
     }
@@ -168,9 +179,9 @@ public class GameView extends BaseView {
 
     private void installTheme() {
         for (int i = 0; i < cols; ++i) {
-            setThemeWhen(columns[i], MouseEventType.MOUSE_MOVED, UIGlobal.THEME_AFTER);
-            setThemeWhen(columns[i], MouseEventType.MOUSE_ENTERED, UIGlobal.THEME_AFTER);
-            setThemeWhen(columns[i], MouseEventType.MOUSE_EXITED, UIGlobal.THEME_ORIGIN);
+            setThemeWhen(columns[i], MouseEventType.MOUSE_MOVED, UiGlobal.THEME_AFTER);
+            setThemeWhen(columns[i], MouseEventType.MOUSE_ENTERED, UiGlobal.THEME_AFTER);
+            setThemeWhen(columns[i], MouseEventType.MOUSE_EXITED, UiGlobal.THEME_ORIGIN);
         }
     }
 
@@ -192,6 +203,7 @@ public class GameView extends BaseView {
             case MiniMax:
                 agent = new Agent(new HumanPlayer(), new RandomComputerPlayer());
                 break;
+            default:
         }
     }
 }

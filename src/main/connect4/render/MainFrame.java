@@ -11,6 +11,13 @@ import org.hexworks.zircon.api.view.base.BaseView;
 import connect4.render.view.AboutView;
 import connect4.render.view.WelcomeView;
 
+/**
+ * Main frame of app
+ *
+ * The entry of swing renderer
+ *
+ * @author yang
+ */
 public class MainFrame {
     WelcomeView welcome;
     AboutView about;
@@ -18,12 +25,12 @@ public class MainFrame {
     SelectView select;
 
     public MainFrame() {
-        TileGrid tileGrid = UIGlobal.startTileGrid("Connect-4");
+        TileGrid tileGrid = UiGlobal.startTileGrid("Connect-4");
 
-        welcome = new WelcomeView(tileGrid, UIGlobal.THEME_ORIGIN);
-        about = new AboutView(tileGrid, UIGlobal.THEME_ORIGIN);
-        select = new SelectView(tileGrid, UIGlobal.THEME_ORIGIN);
-        game = new GameView(tileGrid, UIGlobal.THEME_ORIGIN);
+        welcome = new WelcomeView(tileGrid, UiGlobal.THEME_ORIGIN);
+        about = new AboutView(tileGrid, UiGlobal.THEME_ORIGIN);
+        select = new SelectView(tileGrid, UiGlobal.THEME_ORIGIN);
+        game = new GameView(tileGrid, UiGlobal.THEME_ORIGIN);
     }
 
     private void install() {
@@ -56,6 +63,7 @@ public class MainFrame {
                 case "c":
                     game.loadGame(PlayerBMode.MiniMax);
                     break;
+                default:
             }
             game.dock();
             return UIEventResponse.processed();
