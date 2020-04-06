@@ -1,11 +1,16 @@
 package connect4;
 
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @author yang
  */
 public class Utils {
+
+    public static ExecutorService service = Executors.newSingleThreadExecutor();
+
     public static int randomInt(int upperRange) {
         Random random = new Random();
         return random.nextInt(upperRange);

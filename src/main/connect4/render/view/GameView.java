@@ -190,7 +190,7 @@ public class GameView extends BaseView {
         for (int i = 0; i < cols; ++i) {
             int finalI = i;
             columns[i].handleMouseEvents(MouseEventType.MOUSE_RELEASED, ((event, phase) -> {
-                agent.reportInput(finalI);
+                agent.reportUiInput(finalI);
                 return UIEventResponse.stopPropagation();
             }));
         }

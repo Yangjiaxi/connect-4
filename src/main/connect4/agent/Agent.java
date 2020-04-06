@@ -48,11 +48,13 @@ public class Agent {
         }
     }
 
+    public Board getBoard() {
+        return board;
+    }
+
     public Grid getGrid(int row, int col) {
         return board.getGrid(row, col);
     }
-
-    public Board getBoard() { return board; }
 
     public GridType getActivePlayer() {
         return nextColor;
@@ -66,11 +68,18 @@ public class Agent {
         return state;
     }
 
-    public void start() {
+    public void initBoard() {
+        board = new Board(Options.BOARD_ROWS, Options.BOARD_COLUMNS);
+    }
+
+    public void initState() {
         state = AgentState.READY;
         nextColor = GridType.PLAYER_A;
-        board = new Board(Options.BOARD_ROWS, Options.BOARD_COLUMNS);
+    }
 
+    public void start() {
+        initState();
+        initBoard();
         stepInto();
     }
 
@@ -172,10 +181,35 @@ public class Agent {
         }
     }
 
-    public void reportInput(int column) {
-        if (state != AgentState.WAITING_HUMAN && state != AgentState.WAITING_COMPUTER) {
+    private BasePlayer getCurrentPlayer() {
+        return nextColor == GridType.PLAYER_A ? playerA : playerB;
+    }
+
+    private boolean isCurrentHuman() {
+        return getCurrentPlayer() instanceof HumanPlayer;
+    }
+
+    private boolean isCurrentComputer() {
+        return getCurrentPlayer() instanceof BaseComputerPlayer;
+    }
+
+    public void reportComputerInput(int column) {
+        boolean needComputer = state == AgentState.WAITING_COMPUTER && isCurrentComputer();
+        if (!needComputer) {
             return;
         }
+        reportInput(column);
+    }
+
+    public void reportUiInput(int column) {
+        boolean needHuman = state == AgentState.WAITING_HUMAN && isCurrentHuman();
+        if (!needHuman) {
+            return;
+        }
+        reportInput(column);
+    }
+
+    public void reportInput(int column) {
         if (!board.canPlace(column)) {
             return;
         }
@@ -192,7 +226,7 @@ public class Agent {
      * @see AgentState
      */
     private void stepInto() {
-        BasePlayer player = nextColor == GridType.PLAYER_A ? playerA : playerB;
+        BasePlayer player = getCurrentPlayer();
         if (state == AgentState.READY) {
             if (board.getLeftGrids() <= 0) {
                 state = AgentState.NO_WIN;
@@ -209,6 +243,4 @@ public class Agent {
 
         view.updateComponents();
     }
-
-
 }

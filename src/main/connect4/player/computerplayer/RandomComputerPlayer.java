@@ -1,20 +1,21 @@
 package connect4.player.computerplayer;
 
+import connect4.Utils;
 import connect4.board.Board;
 
 import java.util.ArrayList;
-import java.util.Random;
+
+import static connect4.Options.COMPUTE_SLEEP_TIME_MAX_MS;
+import static connect4.Utils.randomInt;
+
 
 /**
  * Random computer player
- *
+ * <p>
  * generate next move by `Random.nextInt`
  *
  * @author tian
  */
-import static connect4.Options.COMPUTE_SLEEP_TIME_MAX_MS;
-import static connect4.Utils.randomInt;
-
 public class RandomComputerPlayer extends BaseComputerPlayer {
 
     private int innerGetNext(Board board) {
@@ -24,19 +25,18 @@ public class RandomComputerPlayer extends BaseComputerPlayer {
                 columns.add(j);
             }
         }
-        return columns.get(new Random().nextInt(columns.size()));
+        return columns.get(randomInt(columns.size()));
     }
 
     @Override
     public void askNext(Board board) {
-        Thread thread = new Thread(() -> {
+        Utils.service.execute(() -> {
             try {
                 Thread.sleep(randomInt(COMPUTE_SLEEP_TIME_MAX_MS));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            agent.reportInput(innerGetNext(board));
+            agent.reportComputerInput(innerGetNext(board));
         });
-        thread.start();
     }
 }
