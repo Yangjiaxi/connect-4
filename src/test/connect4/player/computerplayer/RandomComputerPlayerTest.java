@@ -1,10 +1,10 @@
 package connect4.player.computerplayer;
 
-import static org.junit.Assert.fail;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.fail;
 
 public class RandomComputerPlayerTest {
 	RandomComputerPlayer testobj;

@@ -1,15 +1,15 @@
 package connect4.render;
 
 import connect4.player.PlayerBMode;
+import connect4.render.view.AboutView;
 import connect4.render.view.GameView;
 import connect4.render.view.SelectView;
+import connect4.render.view.WelcomeView;
 import org.hexworks.zircon.api.component.Button;
 import org.hexworks.zircon.api.grid.TileGrid;
 import org.hexworks.zircon.api.uievent.MouseEventType;
 import org.hexworks.zircon.api.uievent.UIEventResponse;
 import org.hexworks.zircon.api.view.base.BaseView;
-import connect4.render.view.AboutView;
-import connect4.render.view.WelcomeView;
 
 /**
  * Main frame of app

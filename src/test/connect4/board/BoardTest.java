@@ -1,15 +1,14 @@
 package connect4.board;
 
-import static org.junit.Assert.*;
-
+import connect4.BVT;
+import connect4.EC;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import connect4.BVT;
-import connect4.EC;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class BoardTest {
 	
