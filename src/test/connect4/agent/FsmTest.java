@@ -91,12 +91,10 @@ public class FsmTest {
             testAgent.reportInput(i);
             testAgent.reportInput(i);
         }
-        testAgent.getBoard().print();
         assertEquals(testAgent.getActivePlayer(), GridType.PLAYER_A);
         assertEquals(testAgent.getState(), AgentState.WAITING_COMPUTER);
 
         testAgent.reportInput(3);
-        testAgent.getBoard().print();
         assertEquals(testAgent.getActivePlayer(), GridType.PLAYER_A);
         assertEquals(testAgent.getState(), AgentState.WIN);
     }
@@ -160,7 +158,6 @@ public class FsmTest {
         for (int i = 0; i < Options.BOARD_COLUMNS * Options.BOARD_ROWS; i++) {
             testAgent.getBoard().leftGridsDec();
         }
-        System.out.println(testAgent.getBoard().getLeftGrids());
         testAgent.pseudoStepInto();
         assertEquals(AgentState.NO_WIN, testAgent.getState());
     }

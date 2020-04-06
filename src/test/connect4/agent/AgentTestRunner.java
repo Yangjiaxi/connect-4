@@ -7,7 +7,7 @@ import org.junit.runner.notification.Failure;
 
 public class AgentTestRunner {
     public static void main(String[] args) {
-        Result result = JUnitCore.runClasses(AgentTest.class);
+        Result result = JUnitCore.runClasses(AgentTest.class, FsmTest.class);
 
         System.out.println("=================== Test Report Of Agent===================");
         System.out.println("\033[35;4m" + "Run " + result.getRunCount() + " test cases, Ignore " +
