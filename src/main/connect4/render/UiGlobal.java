@@ -38,7 +38,9 @@ public class UiGlobal {
      */
     public static int UNIT_SIZE = 3;
 
-    public static int ACTION_LABEL_WIDTH = 15;
+    public static int ACTION_LABEL_WIDTH = 14;
+    public static int ACTION_BORDER_WIDTH = 2;
+    public static int ACTION_TEXT_WIDTH = ACTION_LABEL_WIDTH - ACTION_BORDER_WIDTH;
 
     public static ColorTheme THEME_ORIGIN = ColorThemes.techLight();
     public static ColorTheme THEME_AFTER = ColorThemes.gamebookers();
