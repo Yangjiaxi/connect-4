@@ -60,10 +60,6 @@ public class Agent {
         return nextColor;
     }
 
-    public void connect(GameView gameView) {
-        view = gameView;
-    }
-
     public AgentState getState() {
         return state;
     }
@@ -87,6 +83,17 @@ public class Agent {
         playerA = null;
         playerB = null;
         state = AgentState.READY;
+    }
+
+    public void connect(GameView gameView) {
+        view = gameView;
+    }
+
+    private void notifyViewComponent() {
+        if (view == null) {
+            return;
+        }
+        view.updateComponents();
     }
 
     private boolean validPosition(int row, int col) {
@@ -215,7 +222,7 @@ public class Agent {
         }
         Position lastMove = board.dropPiece(nextColor, column);
         checkBoard(nextColor, lastMove);
-        view.updateComponents();
+        notifyViewComponent();
         stepInto();
     }
 
@@ -241,6 +248,6 @@ public class Agent {
             System.out.println("Winner : " + (nextColor == GridType.PLAYER_A ? "player_A" : "player_B"));
         }
 
-        view.updateComponents();
+        notifyViewComponent();
     }
 }
