@@ -22,10 +22,10 @@ import java.util.ArrayList;
  * @see AgentState
  */
 public class Agent {
-    private final Board board;
+    private Board board;
 
-    private final BasePlayer player_A;
-    private final BasePlayer player_B;
+    private BasePlayer playerA;
+    private BasePlayer playerB;
     private GridType nextColor;
 
     private final int goal;
@@ -34,11 +34,18 @@ public class Agent {
     private GameView view;
 
     public Agent(BasePlayer pa, BasePlayer pb) {
-        board = new Board(Options.BOARD_ROWS, Options.BOARD_COLUMNS);
-
         goal = Options.GOAL_TO_WIN;
-        player_A = pa;
-        player_B = pb;
+        playerA = pa;
+        playerB = pb;
+
+        installAgent(playerA);
+        installAgent(playerB);
+    }
+
+    private void installAgent(BasePlayer player) {
+        if (player instanceof BaseComputerPlayer) {
+            ((BaseComputerPlayer) player).setAgent(this);
+        }
     }
 
     public Grid getGrid(int row, int col) {
@@ -60,12 +67,15 @@ public class Agent {
     public void start() {
         state = AgentState.READY;
         nextColor = GridType.PLAYER_A;
+        board = new Board(Options.BOARD_ROWS, Options.BOARD_COLUMNS);
+
         stepInto();
     }
 
-    private Position doComputerStep(BaseComputerPlayer player, GridType type) {
-        int decide = player.askNext(board);
-        return board.dropPiece(type, decide);
+    public void stop() {
+        playerA = null;
+        playerB = null;
+        state = AgentState.READY;
     }
 
     private boolean validPosition(int row, int col) {
@@ -161,13 +171,12 @@ public class Agent {
     }
 
     public void reportInput(int column) {
-        if (state != AgentState.WAITING) {
+        if (state != AgentState.WAITING_HUMAN && state != AgentState.WAITING_COMPUTER) {
             return;
         }
         if (!board.canPlace(column)) {
             return;
         }
-
         Position lastMove = board.dropPiece(nextColor, column);
         checkBoard(nextColor, lastMove);
         view.updateComponents();
@@ -181,18 +190,16 @@ public class Agent {
      * @see AgentState
      */
     private void stepInto() {
-        BasePlayer player = nextColor == GridType.PLAYER_A ? player_A : player_B;
+        BasePlayer player = nextColor == GridType.PLAYER_A ? playerA : playerB;
         if (state == AgentState.READY) {
             if (board.getLeftGrids() <= 0) {
                 state = AgentState.NO_WIN;
             }
             if (player instanceof BaseComputerPlayer) {
-                Position lastMove = doComputerStep((BaseComputerPlayer) player, nextColor);
-                checkBoard(nextColor, lastMove);
-                view.updateComponents();
-                stepInto();
+                state = AgentState.WAITING_COMPUTER;
+                ((BaseComputerPlayer) player).askNext(board);
             } else if (player instanceof HumanPlayer) {
-                state = AgentState.WAITING;
+                state = AgentState.WAITING_HUMAN;
             }
         } else if (state == AgentState.WIN) {
             System.out.println("Winner : " + (nextColor == GridType.PLAYER_A ? "player_A" : "player_B"));

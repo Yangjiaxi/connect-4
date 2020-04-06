@@ -1,7 +1,7 @@
 package connect4.agent;
 
 /**
- * @author yang
+ * @author chengli
  * <p>
  * State of Agent,
  * key component of app's logic,
@@ -19,7 +19,11 @@ public enum AgentState {
     /**
      * WAITING `HumanPlayer` select input from UI
      */
-    WAITING,
+    WAITING_HUMAN,
+    /**
+     * WAITING `Computer` select input from code
+     */
+    WAITING_COMPUTER,
     /**
      * Winner has been judged
      * No input is accepted anymore

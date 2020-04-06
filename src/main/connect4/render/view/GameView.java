@@ -8,15 +8,23 @@ import connect4.board.GridType;
 import connect4.player.*;
 import connect4.player.computerplayer.RandomComputerPlayer;
 import connect4.render.UiGlobal;
+import org.hexworks.zircon.api.builder.graphics.LayerBuilder;
+import org.hexworks.zircon.api.color.ANSITileColor;
 import org.hexworks.zircon.api.component.*;
+import org.hexworks.zircon.api.data.Tile;
 import org.hexworks.zircon.api.graphics.BoxType;
+import org.hexworks.zircon.api.graphics.LayerHandle;
 import org.hexworks.zircon.api.grid.TileGrid;
 import org.hexworks.zircon.api.uievent.MouseEventType;
 import org.hexworks.zircon.api.uievent.UIEventResponse;
 import org.hexworks.zircon.api.view.base.BaseView;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+
+import static connect4.Utils.strCenter;
 import static connect4.render.UiGlobal.colorToFontStyle;
+import static connect4.render.UiGlobal.colorToSingleStyle;
 import static org.hexworks.zircon.api.ComponentDecorations.*;
 import static org.hexworks.zircon.api.Components.*;
 import static org.hexworks.zircon.api.color.ANSITileColor.*;
@@ -28,15 +36,19 @@ import static org.hexworks.zircon.api.color.ANSITileColor.*;
  */
 
 public class GameView extends BaseView {
+    int rows, cols, goal;
+    private Agent agent;
 
     public Button backButton;
+
     private final Label action;
     private final Label player;
+    private final VBox[] columns;
 
-    VBox[] columns;
-    int rows, cols, goal;
+    private final int padTop;
+    private final int padLeft;
 
-    private Agent agent;
+    private final ArrayList<LayerHandle> layerBuffer;
 
     public GameView(@NotNull TileGrid tileGrid, @NotNull ColorTheme theme) {
         super(tileGrid, theme);
@@ -46,10 +58,10 @@ public class GameView extends BaseView {
         goal = Options.GOAL_TO_WIN;
 
         int areaHeight = rows * (UiGlobal.UNIT_SIZE - 1) + 1;
-        int padTop = (UiGlobal.FRAME_HEIGHT - areaHeight) / 2;
-        int padLeft = (UiGlobal.FRAME_WIDTH - UiGlobal.UNIT_SIZE * cols) / 2;
+        padTop = (UiGlobal.FRAME_HEIGHT - areaHeight) / 2;
+        padLeft = (UiGlobal.FRAME_WIDTH - UiGlobal.UNIT_SIZE * cols) / 2;
 
-        action = label().withSize(11, 3)
+        action = label().withSize(UiGlobal.ACTION_LABEL_WIDTH, 3)
                 .withDecorations(box(BoxType.LEFT_RIGHT_DOUBLE))
                 .withPosition(padLeft, padTop - 3)
                 .build();
@@ -58,8 +70,7 @@ public class GameView extends BaseView {
                 .withText(" ")
                 .withDecorations(box(BoxType.LEFT_RIGHT_DOUBLE))
                 .withSize(3, 3)
-                .withPosition(padLeft + UiGlobal.UNIT_SIZE * cols - 3,
-                        padTop - 3)
+                .withPosition(padLeft + UiGlobal.UNIT_SIZE * cols - 3, padTop - 3)
                 .build();
 
         getScreen().addComponent(action);
@@ -71,6 +82,7 @@ public class GameView extends BaseView {
         getScreen().addComponent(backButton);
 
         columns = new VBox[Options.BOARD_COLUMNS];
+        layerBuffer = new ArrayList<>();
 
         for (int i = 0; i < cols; ++i) {
             columns[i] = vbox()
@@ -86,85 +98,92 @@ public class GameView extends BaseView {
 
     @Override
     public void onDock() {
-        System.out.println("Switch to Board page.");
         start();
     }
 
     @Override
     public void onUndock() {
-        System.out.println("Unload Board page.");
+        agent.stop();
+        layerBuffer.forEach(LayerHandle::removeLayer);
     }
 
     public void updateComponents() {
-        action.setText(stateToText(agent.getState()));
+        action.setText(strCenter(stateToText(agent.getState()), UiGlobal.ACTION_LABEL_WIDTH));
 
-        player.setText(gridTypeToChar(agent.getActivePlayer()));
-        player.setComponentStyleSet(gridTypeToColor(agent.getActivePlayer()));
+        player.setText(String.valueOf(gridTypeToChar(agent.getActivePlayer())));
+        player.setComponentStyleSet(colorToFontStyle(gridTypeToColor(agent.getActivePlayer())));
 
         for (int j = 0; j < cols; ++j) {
-            columns[j].clear();
             for (int i = 0; i < rows; ++i) {
-                columns[j].addComponent(label()
-                        .withText(gridTypeToChar(agent.getGrid(i, j).getType()))
-                        .withSize(1, 1)
-                        .withComponentStyleSet(gridToColor(agent.getGrid(i, j)))
-                        .withPosition(0, i)
-                        .build());
+                Grid tmp = agent.getGrid(i, j);
+                if (tmp.getType() != GridType.EMPTY) {
+                    layerBuffer.add(getScreen().addLayer(new LayerBuilder()
+                            .withOffset(padLeft + UiGlobal.UNIT_SIZE * j + 1,
+                                    padTop + 1 + (UiGlobal.UNIT_SIZE - 1) * i)
+                            .withSize(1, 1)
+                            .withFiller(Tile.newBuilder()
+                                    .withStyleSet(colorToSingleStyle(gridToColor(tmp)))
+                                    .withCharacter(gridTypeToChar(tmp.getType()))
+                                    .build())
+                            .build()));
+                }
             }
         }
     }
 
     public void start() {
         agent.connect(this);
-
         agent.start();
     }
 
     private String stateToText(AgentState state) {
         switch (state) {
             case READY:
-            case WAITING:
+                return "START";
+            case WAITING_COMPUTER:
+                return "THINKING";
+            case WAITING_HUMAN:
                 return "MOVE";
             case WIN:
                 return "WINNER";
             case NO_WIN:
                 return "NO WINNER";
             default:
+                return "BUG :P";
         }
-        return "BUG :P";
     }
 
-    private ComponentStyleSet gridTypeToColor(GridType type) {
+    private ANSITileColor gridTypeToColor(GridType type) {
         switch (type) {
             case EMPTY:
-                return colorToFontStyle(BRIGHT_WHITE);
+                return BRIGHT_WHITE;
             case PLAYER_A:
-                return colorToFontStyle(BRIGHT_YELLOW);
+                return BRIGHT_YELLOW;
             case PLAYER_B:
-                return colorToFontStyle(BRIGHT_BLUE);
+                return BRIGHT_BLUE;
             default:
         }
-        return colorToFontStyle(BRIGHT_WHITE);
+        return BRIGHT_WHITE;
     }
 
-    private ComponentStyleSet gridToColor(Grid grid) {
+    private ANSITileColor gridToColor(Grid grid) {
         if (grid.isWinTrace()) {
-            return colorToFontStyle(BRIGHT_RED);
+            return BRIGHT_RED;
         }
         return gridTypeToColor(grid.getType());
     }
 
-    private String gridTypeToChar(GridType type) {
+    private char gridTypeToChar(GridType type) {
         switch (type) {
             case EMPTY:
-                return " ";
+                return ' ';
             case PLAYER_A:
-                return "X";
+                return 'X';
             case PLAYER_B:
-                return "O";
+                return 'O';
             default:
         }
-        return " ";
+        return ' ';
     }
 
     private void installMouseSelect() {
@@ -201,7 +220,7 @@ public class GameView extends BaseView {
                 agent = new Agent(new HumanPlayer(), new RandomComputerPlayer());
                 break;
             case MiniMax:
-                agent = new Agent(new HumanPlayer(), new RandomComputerPlayer());
+                agent = new Agent(new RandomComputerPlayer(), new RandomComputerPlayer());
                 break;
             default:
         }

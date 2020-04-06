@@ -1,5 +1,6 @@
 package connect4.player.computerplayer;
 
+import connect4.agent.Agent;
 import connect4.board.Board;
 import connect4.player.BasePlayer;
 
@@ -13,5 +14,11 @@ public abstract class BaseComputerPlayer extends BasePlayer {
      * @param board current board
      * @return column at which the player want to place the disc
      */
-    public abstract int askNext(Board board);
+    public abstract void askNext(Board board);
+
+    protected Agent agent;
+
+    public void setAgent(Agent agent) {
+        this.agent = agent;
+    }
 }
