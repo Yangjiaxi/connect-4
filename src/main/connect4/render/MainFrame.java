@@ -1,6 +1,6 @@
 package connect4.render;
 
-import connect4.player.PlayerBMode;
+import connect4.player.PlayerType;
 import connect4.render.view.*;
 import org.hexworks.zircon.api.component.Button;
 import org.hexworks.zircon.api.grid.TileGrid;
@@ -54,26 +54,29 @@ public class MainFrame {
         }));
         // Select Player -[Start]-> Game
         player.startButton.handleMouseEvents(MouseEventType.MOUSE_RELEASED, ((event, phase) -> {
-            if (player.group.getSelectedButton().isEmpty()) {
+            if (player.groupA.getSelectedButton().isEmpty() || player.groupB.getSelectedButton().isEmpty()) {
                 System.out.println("Pass");
                 return UIEventResponse.pass();
             }
-            String key = player.group.getSelectedButton().get().getKey();
-            switch (key) {
-                case "a":
-                    game.loadGame(PlayerBMode.Human);
-                    break;
-                case "b":
-                    game.loadGame(PlayerBMode.RNG);
-                    break;
-                case "c":
-                    game.loadGame(PlayerBMode.MiniMax);
-                    break;
-                default:
-            }
+            String keyA = player.groupA.getSelectedButton().get().getKey();
+            String keyB = player.groupB.getSelectedButton().get().getKey();
+            game.loadGame(keyToType(keyA), keyToType(keyB));
             game.dock();
             return UIEventResponse.processed();
         }));
+    }
+
+    private PlayerType keyToType(String key) {
+        switch (key) {
+            case "a":
+                return PlayerType.Human;
+            case "b":
+                return PlayerType.RNG;
+            case "c":
+                return PlayerType.MiniMax;
+            default:
+        }
+        return PlayerType.Human;
     }
 
     public void clickAtThen(Button obj, BaseView target) {

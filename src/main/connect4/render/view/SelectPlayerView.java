@@ -9,7 +9,6 @@ import org.hexworks.zircon.api.view.base.BaseView;
 import org.jetbrains.annotations.NotNull;
 
 import static org.hexworks.zircon.api.ComponentDecorations.box;
-import static org.hexworks.zircon.api.ComponentDecorations.shadow;
 import static org.hexworks.zircon.api.Components.*;
 import static org.hexworks.zircon.api.color.ANSITileColor.BRIGHT_GREEN;
 import static org.hexworks.zircon.api.color.ANSITileColor.BRIGHT_RED;
@@ -24,12 +23,12 @@ public class SelectPlayerView extends BaseView {
 
     public Button backButton;
     public Button startButton;
-    public RadioButtonGroup group;
+    public RadioButtonGroup groupA, groupB;
 
     public SelectPlayerView(@NotNull TileGrid tileGrid, @NotNull ColorTheme theme) {
         super(tileGrid, theme);
 
-        String content = "~~ YOUR  ENEMY ~~";
+        String content = "~~ CHOOSE A&B ~~";
         TextBox logo = Components.textBox(content.length())
                 .withDecorations(box(BoxType.LEFT_RIGHT_DOUBLE))
                 .addNewLine()
@@ -44,34 +43,64 @@ public class SelectPlayerView extends BaseView {
         getScreen().addComponent(logo);
         getScreen().addComponent(backButton);
 
-        VBox radioBox = vbox()
-                .withSize(getScreen().getWidth(), 6)
-                .withAlignmentWithin(getScreen(), ComponentAlignment.CENTER)
-                .withDecorations(box(), shadow())
+        VBox playerA = vbox()
+                .withSize(13, 6)
+                .withAlignmentAround(logo, ComponentAlignment.BOTTOM_CENTER)
+                .withDecorations(box(BoxType.SINGLE))
                 .build();
 
-        RadioButton a = radioButton()
-                .withText("DUMB HUMAN LIKE YOU")
+        RadioButton a1 = radioButton()
+                .withText("HUMAN")
                 .withKey("a")
                 .build();
-        RadioButton b = radioButton()
-                .withText("MINDLESS MACHINE")
+        RadioButton b1 = radioButton()
+                .withText("RANDOM")
                 .withKey("b")
                 .build();
-        RadioButton c = radioButton()
-                .withText("*THE* HUMAN KILLER")
+        RadioButton c1 = radioButton()
+                .withText("**AI**")
                 .withKey("c")
                 .build();
 
-        radioBox.addComponents(a, b, c);
+        playerA.addComponent(label().withText("Player A:"));
+        playerA.addComponents(a1, b1, c1);
 
-        group = radioButtonGroup().build();
-        group.addComponents(a, b, c);
+        groupA = radioButtonGroup().build();
+        groupA.addComponents(a1, b1, c1);
+        a1.setSelected(true);
 
-        getScreen().addComponent(radioBox);
+        getScreen().addComponent(playerA);
 
-        startButton = UiGlobal.makeColoredButton("START", BRIGHT_GREEN)
-                .withAlignmentAround(radioBox, ComponentAlignment.BOTTOM_CENTER)
+        VBox playerB = vbox()
+                .withSize(13, 6)
+                .withDecorations(box(BoxType.SINGLE))
+                .withPosition(playerA.getPosition().withRelativeY(playerA.getHeight() + 1))
+                .build();
+
+        RadioButton a2 = radioButton()
+                .withText("HUMAN")
+                .withKey("a")
+                .build();
+        RadioButton b2 = radioButton()
+                .withText("RANDOM")
+                .withKey("b")
+                .build();
+        RadioButton c2 = radioButton()
+                .withText("**AI**")
+                .withKey("c")
+                .build();
+
+        playerB.addComponent(label().withText("Player B:"));
+        playerB.addComponents(a2, b2, c2);
+
+        groupB = radioButtonGroup().build();
+        groupB.addComponents(a2, b2, c2);
+        a2.setSelected(true);
+
+        getScreen().addComponent(playerB);
+
+        startButton = UiGlobal.makeColoredButton("GO→", BRIGHT_GREEN)
+                .withAlignmentAround(playerB, ComponentAlignment.BOTTOM_CENTER)
                 .build();
 
         getScreen().addComponent(startButton);
@@ -79,11 +108,11 @@ public class SelectPlayerView extends BaseView {
 
     @Override
     public void onDock() {
-        System.out.println("Switch to Select page.");
+        System.out.println("Switch to Select Player page.");
     }
 
     @Override
     public void onUndock() {
-        System.out.println("Unload Select page.");
+        System.out.println("Unload Select Player page.");
     }
 }

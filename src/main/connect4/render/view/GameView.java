@@ -5,8 +5,9 @@ import connect4.agent.Agent;
 import connect4.agent.AgentState;
 import connect4.board.Grid;
 import connect4.board.GridType;
+import connect4.player.BasePlayer;
 import connect4.player.HumanPlayer;
-import connect4.player.PlayerBMode;
+import connect4.player.PlayerType;
 import connect4.player.computerplayer.RandomComputerPlayer;
 import org.hexworks.zircon.api.builder.graphics.LayerBuilder;
 import org.hexworks.zircon.api.color.ANSITileColor;
@@ -208,18 +209,20 @@ public class GameView extends BaseView {
         }));
     }
 
-    public void loadGame(PlayerBMode human) {
-        switch (human) {
+    private BasePlayer modeToPlayer(PlayerType type) {
+        switch (type) {
             case Human:
-                agent = new Agent(new HumanPlayer(), new HumanPlayer());
-                break;
+                return new HumanPlayer();
             case RNG:
-                agent = new Agent(new HumanPlayer(), new RandomComputerPlayer());
-                break;
+                return new RandomComputerPlayer();
             case MiniMax:
-                agent = new Agent(new RandomComputerPlayer(), new RandomComputerPlayer());
-                break;
+                return new RandomComputerPlayer();
             default:
         }
+        return new HumanPlayer();
+    }
+
+    public void loadGame(PlayerType playerA, PlayerType playerB) {
+        agent = new Agent(modeToPlayer(playerA), modeToPlayer(playerB));
     }
 }

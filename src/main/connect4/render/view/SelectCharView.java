@@ -7,24 +7,19 @@ import org.hexworks.zircon.api.component.*;
 import org.hexworks.zircon.api.fragment.MultiSelect;
 import org.hexworks.zircon.api.graphics.BoxType;
 import org.hexworks.zircon.api.grid.TileGrid;
-import org.hexworks.zircon.api.uievent.UIEventResponse;
 import org.hexworks.zircon.api.view.base.BaseView;
 import org.jetbrains.annotations.NotNull;
-import org.w3c.dom.events.UIEvent;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static connect4.render.UiGlobal.*;
 import static org.hexworks.zircon.api.ComponentDecorations.box;
 import static org.hexworks.zircon.api.Components.label;
 import static org.hexworks.zircon.api.Components.vbox;
 import static org.hexworks.zircon.api.Functions.fromBiConsumer;
-import static org.hexworks.zircon.api.color.ANSITileColor.*;
+import static org.hexworks.zircon.api.color.ANSITileColor.BRIGHT_GREEN;
+import static org.hexworks.zircon.api.color.ANSITileColor.BRIGHT_RED;
 
 /**
  * View: Select Char
@@ -99,7 +94,7 @@ public class SelectCharView extends BaseView {
                 .withPosition(SELECTOR_PAD, 2).build();
         container.addFragment(charSelectorB);
 
-        startButton = UiGlobal.makeColoredButton("START", BRIGHT_GREEN)
+        startButton = UiGlobal.makeColoredButton("GO→", BRIGHT_GREEN)
                 .withAlignmentAround(container, ComponentAlignment.BOTTOM_CENTER)
                 .build();
 
@@ -113,7 +108,7 @@ public class SelectCharView extends BaseView {
                 .withPosition(padLeft, padTop - UNIT_SIZE)
                 .build();
 
-        getScreen().addComponent(label().withText("<<< vs. >>>").withAlignmentAround(container,
+        getScreen().addComponent(label().withText("<<< VS. >>>").withAlignmentAround(container,
                 ComponentAlignment.TOP_CENTER).withDecorations(box(BoxType.LEFT_RIGHT_DOUBLE)).build());
 
         playerB = label()
@@ -134,11 +129,11 @@ public class SelectCharView extends BaseView {
 
     @Override
     public void onDock() {
-        System.out.println("Switch to Select page.");
+        System.out.println("Switch to Select Char page.");
     }
 
     @Override
     public void onUndock() {
-        System.out.println("Unload Select page.");
+        System.out.println("Unload Select Char page.");
     }
 }

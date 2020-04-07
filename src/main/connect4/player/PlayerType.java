@@ -4,7 +4,7 @@ package connect4.player;
  * @author yang
  * User select
  */
-public enum PlayerBMode {
+public enum PlayerType {
     // PVP
     Human,
     /**
