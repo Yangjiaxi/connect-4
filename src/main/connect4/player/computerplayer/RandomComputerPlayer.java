@@ -18,7 +18,7 @@ import static connect4.Utils.randomInt;
  */
 public class RandomComputerPlayer extends BaseComputerPlayer {
 
-    private int innerGetNext(Board board) {
+    public int innerGetNext(Board board) {
         ArrayList<Integer> columns = new ArrayList<>();
         for (int j = 0; j < board.getCols(); ++j) {
             if (board.canPlace(j)) {
