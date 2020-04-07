@@ -72,7 +72,11 @@ public class MainFrame {
             case "b":
                 return PlayerType.RNG;
             case "c":
-                return PlayerType.MiniMax;
+                return PlayerType.MiniMaxEasy;
+            case "d":
+                return PlayerType.MiniMaxNormal;
+            case "e":
+                return PlayerType.MiniMaxHard;
             default:
         }
         return PlayerType.Human;

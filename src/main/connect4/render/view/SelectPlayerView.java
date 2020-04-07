@@ -59,8 +59,8 @@ public class SelectPlayerView extends BaseView {
                 .withKey("b")
                 .build();
         RadioButton c1 = radioButton()
-                .withText("**AI**")
-                .withKey("c")
+                .withText("AI+")
+                .withKey("d")
                 .build();
 
         playerA.addComponent(label().withText("Player A:"));
@@ -73,7 +73,7 @@ public class SelectPlayerView extends BaseView {
         getScreen().addComponent(playerA);
 
         VBox playerB = vbox()
-                .withSize(14, 6)
+                .withSize(14, 8)
                 .withDecorations(box(BoxType.SINGLE))
                 .withPosition(playerA.getPosition().withRelativeY(playerA.getHeight() + 1))
                 .build();
@@ -87,15 +87,23 @@ public class SelectPlayerView extends BaseView {
                 .withKey("b")
                 .build();
         RadioButton c2 = radioButton()
-                .withText("**AI**")
+                .withText("AI")
                 .withKey("c")
+                .build();
+        RadioButton d2 = radioButton()
+                .withText("AI+")
+                .withKey("d")
+                .build();
+        RadioButton e2 = radioButton()
+                .withText("AI++")
+                .withKey("e")
                 .build();
 
         playerB.addComponent(label().withText("Player B:"));
-        playerB.addComponents(a2, b2, c2);
+        playerB.addComponents(a2, b2, c2, d2, e2);
 
         groupB = radioButtonGroup().build();
-        groupB.addComponents(a2, b2, c2);
+        groupB.addComponents(a2, b2, c2, d2, e2);
         a2.setSelected(true);
 
         getScreen().addComponent(playerB);

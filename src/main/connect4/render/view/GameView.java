@@ -220,8 +220,12 @@ public class GameView extends BaseView {
                 return new HumanPlayer();
             case RNG:
                 return new RandomComputerPlayer();
-            case MiniMax:
-                return new MiniMaxPlayer();
+            case MiniMaxEasy:
+                return new MiniMaxPlayer(3);
+            case MiniMaxNormal:
+                return new MiniMaxPlayer(5);
+            case MiniMaxHard:
+                return new MiniMaxPlayer(10);
             default:
         }
         return new HumanPlayer();

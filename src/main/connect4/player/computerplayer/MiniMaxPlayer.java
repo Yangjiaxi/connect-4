@@ -1,6 +1,5 @@
 package connect4.player.computerplayer;
 
-import connect4.Options;
 import connect4.Utils;
 import connect4.board.Board;
 import connect4.board.Grid;
@@ -30,11 +29,15 @@ public class MiniMaxPlayer extends BaseComputerPlayer {
     private static final int MAX_TEST_STEPS = 4;
     private static final int THRESHOLD_DEPTH = 2;
 
+    private int maxDepth;
+
+    public MiniMaxPlayer(int thinkingDepth) {
+        maxDepth = thinkingDepth;
+    }
 
     public int alphaBeta(GridType player, Board board) {
         this.board = board;
         winFoundA = winFoundB = false;
-        int maxDepth = Options.AI_DIFFICULTY;
         if (player == PLAYER_B) {
             evaluateBlackMove(0, 1, -1, Integer.MIN_VALUE + 1,
                     Integer.MAX_VALUE - 1);

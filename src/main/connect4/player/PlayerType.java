@@ -14,11 +14,11 @@ public enum PlayerType {
      */
     RNG,
     /**
-     * TODO
      * Not started yet
      * Generate by algorithm
-     *
      * a little bit smart
      */
-    MiniMax,
+    MiniMaxEasy,
+    MiniMaxNormal,
+    MiniMaxHard,
 }
