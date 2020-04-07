@@ -1,6 +1,7 @@
 package connect4.render.view;
 
 import connect4.Options;
+import connect4.Utils;
 import connect4.agent.Agent;
 import connect4.agent.AgentState;
 import connect4.board.Grid;
@@ -101,12 +102,15 @@ public class GameView extends BaseView {
     @Override
     public void onDock() {
         start();
+        Utils.logger.info("Switch to Game page.");
     }
 
     @Override
     public void onUndock() {
         agent.stop();
         layerBuffer.forEach(LayerHandle::removeLayer);
+        Utils.logger.info("Unload to Game page.");
+
     }
 
     public void updateComponents() {

@@ -55,7 +55,6 @@ public class MainFrame {
         // Select Player -[Start]-> Game
         player.startButton.handleMouseEvents(MouseEventType.MOUSE_RELEASED, ((event, phase) -> {
             if (player.groupA.getSelectedButton().isEmpty() || player.groupB.getSelectedButton().isEmpty()) {
-                System.out.println("Pass");
                 return UIEventResponse.pass();
             }
             String keyA = player.groupA.getSelectedButton().get().getKey();

@@ -2,6 +2,7 @@ package connect4;
 
 import java.util.Random;
 import java.util.concurrent.*;
+import java.util.logging.Logger;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
@@ -9,12 +10,11 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
  * @author yang
  */
 public class Utils {
-    private static final ThreadFactory NAMED_THREAD_FACTORY = new ThreadFactoryBuilder()
-            .setNameFormat("Thread-pool-%d").build();
+    public static final Logger logger = Logger.getLogger("Connect-4");
 
-    public static ExecutorService service = new ThreadPoolExecutor(2, 5,
-            0L, TimeUnit.MILLISECONDS,
-            new LinkedBlockingQueue<>(1024), NAMED_THREAD_FACTORY, new ThreadPoolExecutor.AbortPolicy());
+    public static ExecutorService service = new ThreadPoolExecutor(2, 5, 0L,
+            TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(1024), new ThreadFactoryBuilder()
+            .setNameFormat("Thread-pool-%d").build(), new ThreadPoolExecutor.AbortPolicy());
 
     public static int randomInt(int upperRange) {
         Random random = new Random();

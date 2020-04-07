@@ -1,5 +1,6 @@
 package connect4.render.view;
 
+import connect4.Utils;
 import connect4.render.UiGlobal;
 import org.hexworks.zircon.api.Components;
 import org.hexworks.zircon.api.component.*;
@@ -44,7 +45,7 @@ public class SelectPlayerView extends BaseView {
         getScreen().addComponent(backButton);
 
         VBox playerA = vbox()
-                .withSize(13, 6)
+                .withSize(14, 6)
                 .withAlignmentAround(logo, ComponentAlignment.BOTTOM_CENTER)
                 .withDecorations(box(BoxType.SINGLE))
                 .build();
@@ -72,7 +73,7 @@ public class SelectPlayerView extends BaseView {
         getScreen().addComponent(playerA);
 
         VBox playerB = vbox()
-                .withSize(13, 6)
+                .withSize(14, 6)
                 .withDecorations(box(BoxType.SINGLE))
                 .withPosition(playerA.getPosition().withRelativeY(playerA.getHeight() + 1))
                 .build();
@@ -108,11 +109,11 @@ public class SelectPlayerView extends BaseView {
 
     @Override
     public void onDock() {
-        System.out.println("Switch to Select Player page.");
+        Utils.logger.info("Switch to Select Player page.");
     }
 
     @Override
     public void onUndock() {
-        System.out.println("Unload Select Player page.");
+        Utils.logger.info("Unload Select Player page.");
     }
 }

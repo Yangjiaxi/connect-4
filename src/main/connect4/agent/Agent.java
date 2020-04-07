@@ -1,6 +1,7 @@
 package connect4.agent;
 
 import connect4.Options;
+import connect4.Utils;
 import connect4.board.Board;
 import connect4.board.Grid;
 import connect4.board.GridType;
@@ -270,7 +271,8 @@ public class Agent {
                 state = AgentState.WAITING_HUMAN;
             }
         } else if (state == AgentState.WIN) {
-            System.out.println("Winner : " + (nextColor == GridType.PLAYER_A ? "player_A" : "player_B"));
+            String name = nextColor == GridType.PLAYER_A ? "player_A" : "player_B";
+            Utils.logger.info("Winner : " + name);
         }
 
         notifyViewComponent();

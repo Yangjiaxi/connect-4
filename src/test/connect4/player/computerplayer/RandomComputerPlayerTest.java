@@ -281,8 +281,7 @@ public class RandomComputerPlayerTest {
         innerBoard.dropPiece(GridType.PLAYER_B, 2);
 
         Position actualPos = innerBoard.dropPiece(GridType.PLAYER_A, testobj.innerGetNext(innerBoard));
-        boolean result = 5 == actualPos.getRow() && 4 <= actualPos.getCol() && actualPos.getCol() <= 6
-                || 4 == actualPos.getRow() && 3 == actualPos.getCol();
+        boolean result = 5 == actualPos.getRow() && 3 <= actualPos.getCol() && actualPos.getCol() <= 6;
         assertTrue(result);
     }
 
