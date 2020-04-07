@@ -9,6 +9,7 @@ import connect4.board.GridType;
 import connect4.player.BasePlayer;
 import connect4.player.HumanPlayer;
 import connect4.player.PlayerType;
+import connect4.player.computerplayer.MiniMaxPlayer;
 import connect4.player.computerplayer.RandomComputerPlayer;
 import org.hexworks.zircon.api.builder.graphics.LayerBuilder;
 import org.hexworks.zircon.api.color.ANSITileColor;
@@ -220,7 +221,7 @@ public class GameView extends BaseView {
             case RNG:
                 return new RandomComputerPlayer();
             case MiniMax:
-                return new RandomComputerPlayer();
+                return new MiniMaxPlayer();
             default:
         }
         return new HumanPlayer();
