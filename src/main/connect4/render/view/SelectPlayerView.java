@@ -20,13 +20,13 @@ import static org.hexworks.zircon.api.color.ANSITileColor.BRIGHT_RED;
  * @author yang
  */
 
-public class SelectView extends BaseView {
+public class SelectPlayerView extends BaseView {
 
     public Button backButton;
     public Button startButton;
     public RadioButtonGroup group;
 
-    public SelectView(@NotNull TileGrid tileGrid, @NotNull ColorTheme theme) {
+    public SelectPlayerView(@NotNull TileGrid tileGrid, @NotNull ColorTheme theme) {
         super(tileGrid, theme);
 
         String content = "~~ YOUR  ENEMY ~~";

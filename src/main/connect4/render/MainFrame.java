@@ -1,10 +1,7 @@
 package connect4.render;
 
 import connect4.player.PlayerBMode;
-import connect4.render.view.AboutView;
-import connect4.render.view.GameView;
-import connect4.render.view.SelectView;
-import connect4.render.view.WelcomeView;
+import connect4.render.view.*;
 import org.hexworks.zircon.api.component.Button;
 import org.hexworks.zircon.api.grid.TileGrid;
 import org.hexworks.zircon.api.uievent.MouseEventType;
@@ -13,7 +10,7 @@ import org.hexworks.zircon.api.view.base.BaseView;
 
 /**
  * Main frame of app
- *
+ * <p>
  * The entry of swing renderer
  *
  * @author yang
@@ -22,37 +19,46 @@ public class MainFrame {
     WelcomeView welcome;
     AboutView about;
     GameView game;
-    SelectView select;
+    SelectPlayerView player;
+    SelectCharView character;
 
     public MainFrame() {
         TileGrid tileGrid = UiGlobal.startTileGrid("Connect-4");
 
         welcome = new WelcomeView(tileGrid, UiGlobal.THEME_ORIGIN);
         about = new AboutView(tileGrid, UiGlobal.THEME_ORIGIN);
-        select = new SelectView(tileGrid, UiGlobal.THEME_ORIGIN);
+        player = new SelectPlayerView(tileGrid, UiGlobal.THEME_ORIGIN);
+        character = new SelectCharView(tileGrid, UiGlobal.THEME_ORIGIN);
         game = new GameView(tileGrid, UiGlobal.THEME_ORIGIN);
     }
 
     private void install() {
-        clickAtThen(welcome.newGameButton, select);
-        clickAtThen(select.backButton, welcome);
-
+        // Welcome -[Start]-> Select Char
+        clickAtThen(welcome.newGameButton, character);
+        // Select Char -[Back]-> Welcome
+        clickAtThen(character.backButton, welcome);
+        //Select Char -[Start]-> Select Player
+        clickAtThen(character.startButton, player);
+        // Select Player -[Back]-> Welcome
+        clickAtThen(player.backButton, welcome);
+        // Game -[Back]-> Welcome
         clickAtThen(game.backButton, welcome);
-
+        // Welcome -[About]-> About Us
         clickAtThen(welcome.aboutButton, about);
+        // About -[Back]-> Welcome
         clickAtThen(about.backButton, welcome);
-
+        // Welcome -[Exit]->
         welcome.exitButton.handleMouseEvents(MouseEventType.MOUSE_RELEASED, ((event, phase) -> {
             System.exit(0);
             return UIEventResponse.processed();
         }));
-
-        select.startButton.handleMouseEvents(MouseEventType.MOUSE_RELEASED, ((event, phase) -> {
-            if (select.group.getSelectedButton().isEmpty()) {
+        // Select Player -[Start]-> Game
+        player.startButton.handleMouseEvents(MouseEventType.MOUSE_RELEASED, ((event, phase) -> {
+            if (player.group.getSelectedButton().isEmpty()) {
                 System.out.println("Pass");
                 return UIEventResponse.pass();
             }
-            String key = select.group.getSelectedButton().get().getKey();
+            String key = player.group.getSelectedButton().get().getKey();
             switch (key) {
                 case "a":
                     game.loadGame(PlayerBMode.Human);
