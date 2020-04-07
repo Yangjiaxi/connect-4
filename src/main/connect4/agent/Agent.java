@@ -14,29 +14,31 @@ import java.util.ArrayList;
 
 /**
  * Driver of logic
- * <p>
  * Agent contains a FSM(finite state machine)
  * transfers and states:
- * <p>
  * READY, WAITING_HUMAN, WAITING_COMPUTER, WIN, NO_WIN,
- * <p>
- * {READY} [INIT]:
- * [WHEN] #LeftGrids <= 0
- * [TO] {NO_WIN} [STOP]
- * [WHEN] is instance of BaseComputerPlayer
- * [TO] {WAITING_COMPUTER}
- * [DO] ask computer for next move
- * [WHEN] is instance of HumanPlayer
- * [TO] {WAITING_HUMAN}
- * [DO] wait for UI input
- * {WAITING_COMPUTER} / {WAITING_HUMAN}
- * [WHEN] trigger report input
- * [DO] check board situation
- * [WHEN] not winning yet
- * [TO] {READY}
- * [DO] switch player
- * [WHEN] winner judged
- * [TO] {WIN} [STOP]
+ * ----------------------------
+ * 1. READY (INIT)
+ * - [WHEN] #LeftGrids <= 0 [TO] NO_WIN [STOP]
+ * - [WHEN] is instance of BaseComputerPlayer [TO] WAITING_COMPUTER
+ * ----------------------------
+ * 2. WAITING_COMPUTER
+ * - [DO] ask computer for next move
+ * - [WHEN] trigger report input
+ * - [DO] check board situation
+ * - [WHEN] not winning yet [TO] READY [DO] switch player
+ * - [WHEN] winner judged [TO] WIN [STOP]
+ * ----------------------------
+ * 3. WAITING_HUMAN
+ * - [DO] wait for UI input
+ * - [WHEN] trigger report input
+ * - [DO] check board situation
+ * - [WHEN] not winning yet [TO] READY [DO] switch player
+ * - [WHEN] winner judged [TO] WIN [STOP]
+ * ----------------------------
+ * 4. WIN [STOP]
+ * 5. NO_WIN [STOP]
+ * ----------------------------
  *
  * @author yang
  * @see AgentState
