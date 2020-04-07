@@ -45,10 +45,19 @@ public class UiGlobal {
     public static ColorTheme THEME_ORIGIN = ColorThemes.techLight();
     public static ColorTheme THEME_AFTER = ColorThemes.gamebookers();
 
+    public static final ANSITileColor PLAYER_A_COLOR = ANSITileColor.BRIGHT_YELLOW;
+    public static final ANSITileColor PLAYER_B_COLOR = ANSITileColor.BRIGHT_BLUE;
+    public static final ANSITileColor WIN_TRACE_COLOR = ANSITileColor.BRIGHT_RED;
+
     // public static ColorTheme THEME_ORIGIN = ColorThemes.solarizedDarkBlue();
     // public static ColorTheme THEME_AFTER = ColorThemes.techLight();
 
     public static Size GRID_SIZE = Size.create(FRAME_WIDTH, FRAME_HEIGHT);
+
+    public static final Character[] OPTIONAL_CHARS = {'X', 'O', '☺', '☻', '♥', '♦', '♣', '♠', '♂', '♀', '▲', '▼', '█'};
+
+    public static char charPlayerA = OPTIONAL_CHARS[0];
+    public static char charPlayerB = OPTIONAL_CHARS[1];
 
     public static TileGrid startTileGrid(String title) {
         /*
@@ -62,7 +71,7 @@ public class UiGlobal {
          */
         return SwingApplications.startTileGrid(AppConfig.newBuilder()
                 .withTitle(title)
-                .withDefaultTileset(CP437TilesetResources.markX16x16())
+                .withDefaultTileset(CP437TilesetResources.rexPaint20x20())
                 .enableBetaFeatures()
                 .withSize(GRID_SIZE)
                 .build());

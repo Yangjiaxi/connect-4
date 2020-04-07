@@ -49,7 +49,7 @@ public class FsmTest {
 
     @Category({BVT.class, EC.class})
     @Test
-    public void testStartState02() {
+    public void testStateTrans02() {
         // 测试初始由Human的转移
         // -> WAITING_HUMAN, A
         init(new HumanPlayer(), new RandomComputerPlayer());
@@ -60,7 +60,7 @@ public class FsmTest {
 
     @Category({BVT.class, EC.class})
     @Test
-    public void testStartState03() {
+    public void testStateTrans03() {
         // 测试初始由Computer的转移
         // -> WAITING_COMPUTER
         init(new RandomComputerPlayer(), new RandomComputerPlayer());
@@ -71,7 +71,7 @@ public class FsmTest {
 
     @Category({BVT.class, EC.class})
     @Test
-    public void testStartState04() {
+    public void testStateTrans04() {
         // 测试等待Computer时触发report的转移，未获胜
         // -> WAITING_HUMAN, B
         init(new RandomComputerPlayer(), new HumanPlayer());
@@ -83,7 +83,7 @@ public class FsmTest {
 
     @Category({BVT.class, EC.class})
     @Test
-    public void testStartState05() {
+    public void testStateTrans05() {
         // 测试等待Computer时触发report的转移，获胜
         // -> WIN, A
         init(new RandomComputerPlayer(), new HumanPlayer());
@@ -101,7 +101,7 @@ public class FsmTest {
 
     @Category({BVT.class, EC.class})
     @Test
-    public void testStartState06() {
+    public void testStateTrans06() {
         // 测试等待Human时触发report的转移，未获胜
         // -> WAITING_COMPUTER, B
         init(new HumanPlayer(), new RandomComputerPlayer());
@@ -113,7 +113,7 @@ public class FsmTest {
 
     @Category({BVT.class, EC.class})
     @Test
-    public void testStartState07() {
+    public void testStateTrans07() {
         // 测试等待Human时触发report的转移，获胜
         // -> WIN, A
         init(new HumanPlayer(), new RandomComputerPlayer());
@@ -132,7 +132,7 @@ public class FsmTest {
 
     @Category({BVT.class, EC.class})
     @Test
-    public void testStartState08() {
+    public void testStateHold08() {
         // 测试胜利后的转移
         // WIN -> WIN
         init(new HumanPlayer(), new RandomComputerPlayer());
@@ -151,7 +151,7 @@ public class FsmTest {
 
     @Category({BVT.class, EC.class})
     @Test
-    public void testStartState09() {
+    public void testStateTrans09() {
         // 测试棋盘占满却没有胜利者时的转移
         // -> NO_WIN
         init(new HumanPlayer(), new RandomComputerPlayer());
@@ -164,7 +164,7 @@ public class FsmTest {
 
     @Category({BVT.class, EC.class})
     @Test
-    public void testStartState10() {
+    public void testStateHold10() {
         // 测试无胜利者后的转移
         // NO_WIN -> NO_WIN
         init(new HumanPlayer(), new RandomComputerPlayer());

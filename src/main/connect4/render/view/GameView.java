@@ -1,14 +1,15 @@
 package connect4.render.view;
 
 import connect4.Options;
+import connect4.Utils;
 import connect4.agent.Agent;
 import connect4.agent.AgentState;
 import connect4.board.Grid;
 import connect4.board.GridType;
+import connect4.player.BasePlayer;
 import connect4.player.HumanPlayer;
-import connect4.player.PlayerBMode;
+import connect4.player.PlayerType;
 import connect4.player.computerplayer.RandomComputerPlayer;
-import connect4.render.UiGlobal;
 import org.hexworks.zircon.api.builder.graphics.LayerBuilder;
 import org.hexworks.zircon.api.color.ANSITileColor;
 import org.hexworks.zircon.api.component.*;
@@ -24,12 +25,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 import static connect4.Utils.strCenter;
-import static connect4.render.UiGlobal.colorToFontStyle;
-import static connect4.render.UiGlobal.colorToSingleStyle;
+import static connect4.render.UiGlobal.*;
 import static org.hexworks.zircon.api.ComponentDecorations.box;
 import static org.hexworks.zircon.api.Components.label;
 import static org.hexworks.zircon.api.Components.vbox;
-import static org.hexworks.zircon.api.color.ANSITileColor.*;
+import static org.hexworks.zircon.api.color.ANSITileColor.BRIGHT_RED;
+import static org.hexworks.zircon.api.color.ANSITileColor.BRIGHT_WHITE;
 
 /**
  * View: Gaming
@@ -59,26 +60,26 @@ public class GameView extends BaseView {
         rows = Options.BOARD_ROWS;
         goal = Options.GOAL_TO_WIN;
 
-        int areaHeight = rows * (UiGlobal.UNIT_SIZE - 1) + 1;
-        padTop = (UiGlobal.FRAME_HEIGHT - areaHeight) / 2;
-        padLeft = (UiGlobal.FRAME_WIDTH - UiGlobal.UNIT_SIZE * cols) / 2;
+        int areaHeight = rows * (UNIT_SIZE - 1) + 1;
+        padTop = (FRAME_HEIGHT - areaHeight) / 2;
+        padLeft = (FRAME_WIDTH - UNIT_SIZE * cols) / 2;
 
-        action = label().withSize(UiGlobal.ACTION_LABEL_WIDTH, 3)
+        action = label().withSize(ACTION_LABEL_WIDTH, UNIT_SIZE)
                 .withDecorations(box(BoxType.LEFT_RIGHT_DOUBLE))
-                .withPosition(padLeft, padTop - 3)
+                .withPosition(padLeft, padTop - UNIT_SIZE)
                 .build();
 
         player = label()
                 .withText(" ")
                 .withDecorations(box(BoxType.LEFT_RIGHT_DOUBLE))
-                .withSize(3, 3)
-                .withPosition(padLeft + UiGlobal.UNIT_SIZE * cols - 3, padTop - 3)
+                .withSize(UNIT_SIZE, UNIT_SIZE)
+                .withPosition(padLeft + UNIT_SIZE * cols - UNIT_SIZE, padTop - UNIT_SIZE)
                 .build();
 
         getScreen().addComponent(action);
         getScreen().addComponent(player);
 
-        backButton = UiGlobal.makeColoredButton("BACK", BRIGHT_RED)
+        backButton = makeColoredButton("BACK", BRIGHT_RED)
                 .withAlignmentWithin(getScreen(), ComponentAlignment.BOTTOM_CENTER)
                 .build();
         getScreen().addComponent(backButton);
@@ -88,9 +89,9 @@ public class GameView extends BaseView {
 
         for (int i = 0; i < cols; ++i) {
             columns[i] = vbox()
-                    .withSize(UiGlobal.UNIT_SIZE, areaHeight)
+                    .withSize(UNIT_SIZE, areaHeight)
                     .withDecorations(box(BoxType.SINGLE))
-                    .withPosition(padLeft + i * UiGlobal.UNIT_SIZE, padTop)
+                    .withPosition(padLeft + i * UNIT_SIZE, padTop)
                     .build();
             getScreen().addComponent(columns[i]);
         }
@@ -101,16 +102,19 @@ public class GameView extends BaseView {
     @Override
     public void onDock() {
         start();
+        Utils.logger.info("Switch to Game page.");
     }
 
     @Override
     public void onUndock() {
         agent.stop();
         layerBuffer.forEach(LayerHandle::removeLayer);
+        Utils.logger.info("Unload to Game page.");
+
     }
 
     public void updateComponents() {
-        action.setText(strCenter(stateToText(agent.getState()), UiGlobal.ACTION_TEXT_WIDTH, '>', '<'));
+        action.setText(strCenter(stateToText(agent.getState()), ACTION_TEXT_WIDTH, '>', '<'));
 
         player.setText(String.valueOf(gridTypeToChar(agent.getActivePlayer())));
         player.setComponentStyleSet(colorToFontStyle(gridTypeToColor(agent.getActivePlayer())));
@@ -120,8 +124,8 @@ public class GameView extends BaseView {
                 Grid tmp = agent.getGrid(i, j);
                 if (tmp.getType() != GridType.EMPTY) {
                     layerBuffer.add(getScreen().addLayer(new LayerBuilder()
-                            .withOffset(padLeft + UiGlobal.UNIT_SIZE * j + 1,
-                                    padTop + 1 + (UiGlobal.UNIT_SIZE - 1) * i)
+                            .withOffset(padLeft + UNIT_SIZE * j + 1,
+                                    padTop + 1 + (UNIT_SIZE - 1) * i)
                             .withSize(1, 1)
                             .withFiller(Tile.newBuilder()
                                     .withStyleSet(colorToSingleStyle(gridToColor(tmp)))
@@ -157,35 +161,31 @@ public class GameView extends BaseView {
 
     private ANSITileColor gridTypeToColor(GridType type) {
         switch (type) {
-            case EMPTY:
-                return BRIGHT_WHITE;
             case PLAYER_A:
-                return BRIGHT_YELLOW;
+                return PLAYER_A_COLOR;
             case PLAYER_B:
-                return BRIGHT_BLUE;
+                return PLAYER_B_COLOR;
             default:
+                return BRIGHT_WHITE;
         }
-        return BRIGHT_WHITE;
     }
 
     private ANSITileColor gridToColor(Grid grid) {
         if (grid.isWinTrace()) {
-            return BRIGHT_RED;
+            return WIN_TRACE_COLOR;
         }
         return gridTypeToColor(grid.getType());
     }
 
     private char gridTypeToChar(GridType type) {
         switch (type) {
-            case EMPTY:
-                return ' ';
             case PLAYER_A:
-                return 'X';
+                return charPlayerA;
             case PLAYER_B:
-                return 'O';
+                return charPlayerB;
             default:
+                return ' ';
         }
-        return ' ';
     }
 
     private void installMouseSelect() {
@@ -200,9 +200,9 @@ public class GameView extends BaseView {
 
     private void installTheme() {
         for (int i = 0; i < cols; ++i) {
-            setThemeWhen(columns[i], MouseEventType.MOUSE_MOVED, UiGlobal.THEME_AFTER);
-            setThemeWhen(columns[i], MouseEventType.MOUSE_ENTERED, UiGlobal.THEME_AFTER);
-            setThemeWhen(columns[i], MouseEventType.MOUSE_EXITED, UiGlobal.THEME_ORIGIN);
+            setThemeWhen(columns[i], MouseEventType.MOUSE_MOVED, THEME_AFTER);
+            setThemeWhen(columns[i], MouseEventType.MOUSE_ENTERED, THEME_AFTER);
+            setThemeWhen(columns[i], MouseEventType.MOUSE_EXITED, THEME_ORIGIN);
         }
     }
 
@@ -213,18 +213,20 @@ public class GameView extends BaseView {
         }));
     }
 
-    public void loadGame(PlayerBMode human) {
-        switch (human) {
+    private BasePlayer modeToPlayer(PlayerType type) {
+        switch (type) {
             case Human:
-                agent = new Agent(new HumanPlayer(), new HumanPlayer());
-                break;
+                return new HumanPlayer();
             case RNG:
-                agent = new Agent(new HumanPlayer(), new RandomComputerPlayer());
-                break;
+                return new RandomComputerPlayer();
             case MiniMax:
-                agent = new Agent(new RandomComputerPlayer(), new RandomComputerPlayer());
-                break;
+                return new RandomComputerPlayer();
             default:
         }
+        return new HumanPlayer();
+    }
+
+    public void loadGame(PlayerType playerA, PlayerType playerB) {
+        agent = new Agent(modeToPlayer(playerA), modeToPlayer(playerB));
     }
 }

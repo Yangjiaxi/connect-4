@@ -1,5 +1,6 @@
 package connect4.render.view;
 
+import connect4.Utils;
 import connect4.render.UiGlobal;
 import org.hexworks.zircon.api.Components;
 import org.hexworks.zircon.api.component.Button;
@@ -73,11 +74,11 @@ public class WelcomeView extends BaseView {
 
     @Override
     public void onDock() {
-        System.out.println("Switch to Welcome page.");
+        Utils.logger.info("Switch to Welcome page.");
     }
 
     @Override
     public void onUndock() {
-        System.out.println("Unload Welcome page.");
+        Utils.logger.info("Unload Welcome page.");
     }
 }
