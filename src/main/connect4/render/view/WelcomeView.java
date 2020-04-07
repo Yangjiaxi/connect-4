@@ -2,7 +2,10 @@ package connect4.render.view;
 
 import connect4.render.UiGlobal;
 import org.hexworks.zircon.api.Components;
-import org.hexworks.zircon.api.component.*;
+import org.hexworks.zircon.api.component.Button;
+import org.hexworks.zircon.api.component.ColorTheme;
+import org.hexworks.zircon.api.component.ComponentAlignment;
+import org.hexworks.zircon.api.component.TextBox;
 import org.hexworks.zircon.api.graphics.BoxType;
 import org.hexworks.zircon.api.grid.TileGrid;
 import org.hexworks.zircon.api.view.base.BaseView;

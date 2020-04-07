@@ -5,7 +5,8 @@ import connect4.agent.Agent;
 import connect4.agent.AgentState;
 import connect4.board.Grid;
 import connect4.board.GridType;
-import connect4.player.*;
+import connect4.player.HumanPlayer;
+import connect4.player.PlayerBMode;
 import connect4.player.computerplayer.RandomComputerPlayer;
 import connect4.render.UiGlobal;
 import org.hexworks.zircon.api.builder.graphics.LayerBuilder;
@@ -25,8 +26,9 @@ import java.util.ArrayList;
 import static connect4.Utils.strCenter;
 import static connect4.render.UiGlobal.colorToFontStyle;
 import static connect4.render.UiGlobal.colorToSingleStyle;
-import static org.hexworks.zircon.api.ComponentDecorations.*;
-import static org.hexworks.zircon.api.Components.*;
+import static org.hexworks.zircon.api.ComponentDecorations.box;
+import static org.hexworks.zircon.api.Components.label;
+import static org.hexworks.zircon.api.Components.vbox;
 import static org.hexworks.zircon.api.color.ANSITileColor.*;
 
 /**

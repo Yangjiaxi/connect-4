@@ -8,7 +8,10 @@ import connect4.board.GridType;
 import connect4.board.Position;
 import connect4.player.BasePlayer;
 import connect4.player.HumanPlayer;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 import static org.junit.Assert.*;
