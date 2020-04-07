@@ -1,14 +1,20 @@
 package connect4;
 
 import java.util.Random;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
+
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 /**
  * @author yang
  */
 public class Utils {
-    public static ExecutorService service = Executors.newFixedThreadPool(2);
+    private static final ThreadFactory NAMED_THREAD_FACTORY = new ThreadFactoryBuilder()
+            .setNameFormat("Thread-pool-%d").build();
+
+    public static ExecutorService service = new ThreadPoolExecutor(2, 5,
+            0L, TimeUnit.MILLISECONDS,
+            new LinkedBlockingQueue<>(1024), NAMED_THREAD_FACTORY, new ThreadPoolExecutor.AbortPolicy());
 
     public static int randomInt(int upperRange) {
         Random random = new Random();
