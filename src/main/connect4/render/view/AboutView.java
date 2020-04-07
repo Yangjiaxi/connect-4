@@ -45,11 +45,11 @@ public class AboutView extends BaseView {
 
     @Override
     public void onDock() {
-        Utils.logger.info("Switch to Welcome page.");
+        Utils.logger.fine("Switch to Welcome page.");
     }
 
     @Override
     public void onUndock() {
-        Utils.logger.info("Unload Welcome page.");
+        Utils.logger.fine("Unload Welcome page.");
     }
 }

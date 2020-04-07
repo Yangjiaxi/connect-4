@@ -12,6 +12,6 @@ public class Main {
         MainFrame frame = new MainFrame();
         frame.run();
 
-        Utils.logger.info("Process Exit.");
+        Utils.logger.fine("Process Exit.");
     }
 }

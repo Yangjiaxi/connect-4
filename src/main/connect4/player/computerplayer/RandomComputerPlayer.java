@@ -5,7 +5,7 @@ import connect4.board.Board;
 
 import java.util.ArrayList;
 
-import static connect4.Options.COMPUTE_SLEEP_TIME_MAX_MS;
+import static connect4.Options.*;
 import static connect4.Utils.randomInt;
 
 
@@ -32,7 +32,7 @@ public class RandomComputerPlayer extends BaseComputerPlayer {
     public void askNext(Board board) {
         Utils.service.execute(() -> {
             try {
-                Thread.sleep(randomInt(COMPUTE_SLEEP_TIME_MAX_MS));
+                Thread.sleep(COMPUTE_SLEEP_TIME_MIN_MS + randomInt(COMPUTE_SLEEP_TIME_RANDOM_MS));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

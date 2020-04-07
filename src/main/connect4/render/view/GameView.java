@@ -103,14 +103,14 @@ public class GameView extends BaseView {
     @Override
     public void onDock() {
         start();
-        Utils.logger.info("Switch to Game page.");
+        Utils.logger.fine("Switch to Game page.");
     }
 
     @Override
     public void onUndock() {
         agent.stop();
         layerBuffer.forEach(LayerHandle::removeLayer);
-        Utils.logger.info("Unload to Game page.");
+        Utils.logger.fine("Unload to Game page.");
 
     }
 

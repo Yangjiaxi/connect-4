@@ -109,11 +109,11 @@ public class SelectPlayerView extends BaseView {
 
     @Override
     public void onDock() {
-        Utils.logger.info("Switch to Select Player page.");
+        Utils.logger.fine("Switch to Select Player page.");
     }
 
     @Override
     public void onUndock() {
-        Utils.logger.info("Unload Select Player page.");
+        Utils.logger.fine("Unload Select Player page.");
     }
 }

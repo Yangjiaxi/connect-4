@@ -129,11 +129,11 @@ public class SelectCharView extends BaseView {
 
     @Override
     public void onDock() {
-        Utils.logger.info("Switch to Select Char page.");
+        Utils.logger.fine("Switch to Select Char page.");
     }
 
     @Override
     public void onUndock() {
-        Utils.logger.info("Unload Select Char page.");
+        Utils.logger.fine("Unload Select Char page.");
     }
 }
