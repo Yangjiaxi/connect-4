@@ -9,7 +9,7 @@ public class RandomComputerPlayerTestRunner {
     public static void main(String[] args) {
         Result result = JUnitCore.runClasses(RandomComputerPlayerTest.class);
 
-        System.out.println("=================== Test Report Of Agent===================");
+        System.out.println("=================== Test Report ===================");
         System.out.println("\033[35;4m" + "Run " + result.getRunCount() + " test cases, Ignore " +
                 result.getIgnoreCount() +" test cases" + "\033[0m");
 
