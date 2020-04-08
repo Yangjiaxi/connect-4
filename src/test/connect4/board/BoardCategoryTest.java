@@ -9,8 +9,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Categories.class)
-@Categories.IncludeCategory({BVT.class, EC.class})
-@Categories.ExcludeCategory({IPT.class, LC.class})
+@Categories.IncludeCategory({BVT.class, EC.class, IPT.class, LC.class})
 @Suite.SuiteClasses(BoardTest.class)
 public class BoardCategoryTest {
 

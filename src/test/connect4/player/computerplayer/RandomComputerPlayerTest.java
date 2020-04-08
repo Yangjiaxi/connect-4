@@ -870,7 +870,6 @@ public class RandomComputerPlayerTest {
         assertTrue(result);
     }
 
-    @Ignore
     @Category({EC.class, BVT.class})
     @Test
     public void testAskNextType8() {
