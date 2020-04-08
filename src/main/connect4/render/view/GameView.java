@@ -41,10 +41,12 @@ import static org.hexworks.zircon.api.color.ANSITileColor.BRIGHT_WHITE;
  */
 
 public class GameView extends BaseView {
-    int rows, cols, goal;
+    final int rows;
+    final int cols;
+    final int goal;
     private Agent agent;
 
-    public Button backButton;
+    public final Button backButton;
 
     private final Label action;
     private final Label player;

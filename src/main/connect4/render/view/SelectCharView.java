@@ -38,11 +38,11 @@ public class SelectCharView extends BaseView {
     private static final int SELECTOR_WIDTH = 5;
     private static final int SELECTOR_PAD = (VBOX_WIDTH - SELECTOR_WIDTH) >> 1;
 
-    public Button backButton;
-    public Button startButton;
+    public final Button backButton;
+    public final Button startButton;
 
-    private Label playerA;
-    private Label playerB;
+    private final Label playerA;
+    private final Label playerB;
 
     public SelectCharView(@NotNull TileGrid tileGrid, @NotNull ColorTheme theme) {
         super(tileGrid, theme);

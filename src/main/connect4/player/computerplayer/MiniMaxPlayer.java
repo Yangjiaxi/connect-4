@@ -34,8 +34,8 @@ public class MiniMaxPlayer extends BaseComputerPlayer {
     private static final int MAX_TEST_STEPS = 4;
     private static final int THRESHOLD_DEPTH = 2;
 
-    private int maxDepth;
-    private double heuristicProb;
+    private final int maxDepth;
+    private final double heuristicProb;
 
     public MiniMaxPlayer(int thinkingDepth, double acceptProb) {
         maxDepth = thinkingDepth;
@@ -353,7 +353,7 @@ public class MiniMaxPlayer extends BaseComputerPlayer {
 }
 
 class Pair {
-    boolean finished;
+    final boolean finished;
     int res;
 
     Pair() {
