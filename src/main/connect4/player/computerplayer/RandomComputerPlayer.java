@@ -30,7 +30,7 @@ public class RandomComputerPlayer extends BaseComputerPlayer {
 
     @Override
     public void askNext(Board board) {
-        Utils.service.execute(() -> {
+        Utils.THREAD_SERVICE.execute(() -> {
             try {
                 Thread.sleep(COMPUTE_SLEEP_TIME_MIN_MS + randomInt(COMPUTE_SLEEP_TIME_RANDOM_MS));
             } catch (InterruptedException e) {

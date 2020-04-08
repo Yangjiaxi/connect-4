@@ -43,7 +43,6 @@ import static org.hexworks.zircon.api.color.ANSITileColor.BRIGHT_WHITE;
 public class GameView extends BaseView {
     final int rows;
     final int cols;
-    final int goal;
     private Agent agent;
 
     public final Button backButton;
@@ -62,7 +61,6 @@ public class GameView extends BaseView {
 
         cols = Options.BOARD_COLUMNS;
         rows = Options.BOARD_ROWS;
-        goal = Options.GOAL_TO_WIN;
 
         int areaHeight = rows * (UNIT_SIZE - 1) + 1;
         padTop = (FRAME_HEIGHT - areaHeight) / 2;

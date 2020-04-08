@@ -8,7 +8,6 @@ import connect4.player.BasePlayer;
 import connect4.player.HumanPlayer;
 import connect4.player.computerplayer.RandomComputerPlayer;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -17,13 +16,8 @@ import static org.junit.Assert.assertEquals;
 public class FsmTest {
     Agent testAgent;
 
-    @Before
-    public void setUp() throws Exception {
-
-    }
-
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         if (testAgent != null) {
             testAgent.stop();
         }

@@ -2,7 +2,6 @@ package connect4.render.view;
 
 import connect4.Utils;
 import connect4.render.UiGlobal;
-import org.hexworks.zircon.api.Components;
 import org.hexworks.zircon.api.component.*;
 import org.hexworks.zircon.api.graphics.BoxType;
 import org.hexworks.zircon.api.grid.TileGrid;

@@ -12,7 +12,7 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 public class Utils {
     public static final Logger logger = Logger.getLogger("Connect-4");
 
-    public static final ExecutorService service = new ThreadPoolExecutor(2, 5, 0L,
+    public static final ExecutorService THREAD_SERVICE = new ThreadPoolExecutor(2, 5, 0L,
             TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(1024), new ThreadFactoryBuilder()
             .setNameFormat("Thread-pool-%d").build(), new ThreadPoolExecutor.AbortPolicy());
 
