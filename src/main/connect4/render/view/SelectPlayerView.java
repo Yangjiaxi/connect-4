@@ -29,24 +29,15 @@ public class SelectPlayerView extends BaseView {
     public SelectPlayerView(@NotNull TileGrid tileGrid, @NotNull ColorTheme theme) {
         super(tileGrid, theme);
 
-        String content = "~~ CHOOSE A&B ~~";
-        TextBox logo = Components.textBox(content.length())
-                .withDecorations(box(BoxType.LEFT_RIGHT_DOUBLE))
-                .addNewLine()
-                .addHeader(content, false)
-                .withAlignmentWithin(getScreen(), ComponentAlignment.TOP_CENTER)
-                .build();
-
         backButton = UiGlobal.makeColoredButton("BACK", BRIGHT_RED)
                 .withAlignmentWithin(getScreen(), ComponentAlignment.BOTTOM_RIGHT)
                 .build();
 
-        getScreen().addComponent(logo);
         getScreen().addComponent(backButton);
 
         VBox playerA = vbox()
-                .withSize(14, 6)
-                .withAlignmentAround(logo, ComponentAlignment.BOTTOM_CENTER)
+                .withSize(14, 8)
+                .withAlignmentWithin(getScreen(), ComponentAlignment.TOP_CENTER)
                 .withDecorations(box(BoxType.SINGLE))
                 .build();
 
@@ -59,15 +50,23 @@ public class SelectPlayerView extends BaseView {
                 .withKey("b")
                 .build();
         RadioButton c1 = radioButton()
+                .withText("AI")
+                .withKey("c")
+                .build();
+        RadioButton d1 = radioButton()
                 .withText("AI+")
                 .withKey("d")
                 .build();
+        RadioButton e1 = radioButton()
+                .withText("AI++")
+                .withKey("e")
+                .build();
 
-        playerA.addComponent(label().withText("Player A:"));
-        playerA.addComponents(a1, b1, c1);
+        playerA.addComponent(label().withText("PLAYER A:"));
+        playerA.addComponents(a1, b1, c1, d1, e1);
 
         groupA = radioButtonGroup().build();
-        groupA.addComponents(a1, b1, c1);
+        groupA.addComponents(a1, b1, c1, d1, e1);
         a1.setSelected(true);
 
         getScreen().addComponent(playerA);
@@ -99,7 +98,7 @@ public class SelectPlayerView extends BaseView {
                 .withKey("e")
                 .build();
 
-        playerB.addComponent(label().withText("Player B:"));
+        playerB.addComponent(label().withText("PLAYER B:"));
         playerB.addComponents(a2, b2, c2, d2, e2);
 
         groupB = radioButtonGroup().build();

@@ -29,7 +29,7 @@ import static org.hexworks.zircon.api.color.ANSITileColor.BRIGHT_RED;
 
 public class SelectCharView extends BaseView {
 
-    private static final int VBOX_WIDTH = 21;
+    private static final int VBOX_WIDTH = 23;
     private static final int VBOX_HEIGHT = 7;
 
     private static final int VBOX_PAD = 1;
@@ -62,7 +62,7 @@ public class SelectCharView extends BaseView {
         getScreen().addComponent(container);
 
         container.addComponent(label()
-                .withText(Utils.strCenter("PICK CHAR FOR A",
+                .withText(Utils.strCenter("CHARACTER OF A:",
                         VBOX_DISPLAY_WIDTH, '>', '<'))
                 .withPosition(1, VBOX_PAD)
                 .build());
@@ -79,7 +79,7 @@ public class SelectCharView extends BaseView {
         container.addFragment(charSelectorA);
 
         container.addComponent(label()
-                .withText(Utils.strCenter("PICK CHAR FOR B",
+                .withText(Utils.strCenter("CHARACTER OF B:",
                         VBOX_DISPLAY_WIDTH, '>', '<'))
                 .withPosition(1, 2)
                 .build());
@@ -108,7 +108,7 @@ public class SelectCharView extends BaseView {
                 .withPosition(padLeft, padTop - UNIT_SIZE)
                 .build();
 
-        getScreen().addComponent(label().withText("<<< VS. >>>").withAlignmentAround(container,
+        getScreen().addComponent(label().withText("<<A VS. B>>").withAlignmentAround(container,
                 ComponentAlignment.TOP_CENTER).withDecorations(box(BoxType.LEFT_RIGHT_DOUBLE)).build());
 
         playerB = label()

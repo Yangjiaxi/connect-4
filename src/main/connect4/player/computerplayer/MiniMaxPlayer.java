@@ -23,9 +23,10 @@ public class MiniMaxPlayer extends BaseComputerPlayer {
     private Board board;
     private int column;
     private boolean winFoundA, winFoundB;
-    private boolean redWinDetected, blackWinDetected;
+    private boolean winDetectedA, winDetectedB;
 
-    private static final int[] INCREMENT = {0, 1, 4, 32, 128, 512};
+    //private static final int[] INCREMENT = {0, 1, 4, 32, 128, 512};
+    private static final int[] INCREMENT = {0, 1, 10, 100, 1000, 10000};
     private static final int MAX_TEST_STEPS = 4;
     private static final int THRESHOLD_DEPTH = 2;
 
@@ -39,32 +40,32 @@ public class MiniMaxPlayer extends BaseComputerPlayer {
         this.board = board;
         winFoundA = winFoundB = false;
         if (player == PLAYER_B) {
-            evaluateBlackMove(0, 1, -1, Integer.MIN_VALUE + 1,
+            evaluateMoveB(0, 1, -1, Integer.MIN_VALUE + 1,
                     Integer.MAX_VALUE - 1);
             if (winFoundB) {
                 return column;
             }
             winFoundA = winFoundB = false;
-            evaluateRedMove(0, 1, -1, Integer.MIN_VALUE + 1,
+            evaluateMoveA(0, 1, -1, Integer.MIN_VALUE + 1,
                     Integer.MAX_VALUE - 1);
             if (winFoundA) {
                 return column;
             }
-            evaluateBlackMove(0, maxDepth, -1, Integer.MIN_VALUE + 1,
+            evaluateMoveB(0, maxDepth, -1, Integer.MIN_VALUE + 1,
                     Integer.MAX_VALUE - 1);
         } else {
-            evaluateRedMove(0, 1, -1, Integer.MIN_VALUE + 1,
+            evaluateMoveA(0, 1, -1, Integer.MIN_VALUE + 1,
                     Integer.MAX_VALUE - 1);
             if (winFoundA) {
                 return column;
             }
             winFoundA = winFoundB = false;
-            evaluateBlackMove(0, 1, -1, Integer.MIN_VALUE + 1,
+            evaluateMoveB(0, 1, -1, Integer.MIN_VALUE + 1,
                     Integer.MAX_VALUE - 1);
             if (winFoundB) {
                 return column;
             }
-            evaluateRedMove(0, maxDepth, -1, Integer.MIN_VALUE + 1,
+            evaluateMoveA(0, maxDepth, -1, Integer.MIN_VALUE + 1,
                     Integer.MAX_VALUE - 1);
         }
         return column;
@@ -81,11 +82,11 @@ public class MiniMaxPlayer extends BaseComputerPlayer {
         return ar;
     }
 
-    private int evaluateRedMove(int depth, int maxDepth, int col, int alpha, int beta) {
+    private int evaluateMoveA(int depth, int maxDepth, int col, int alpha, int beta) {
         int min = Integer.MAX_VALUE, score = 0;
         if (col != -1) {
             score = getHeuristicScore(PLAYER_B, col, depth);
-            if (blackWinDetected) {
+            if (winDetectedB) {
                 winFoundB = true;
                 return score;
             }
@@ -96,7 +97,7 @@ public class MiniMaxPlayer extends BaseComputerPlayer {
         for (int c : shuffleArray(BOARD_COLUMNS)) {
             if (board.canPlace(c)) {
                 board.dropPiece(PLAYER_A, c);
-                int value = evaluateBlackMove(depth + 1, maxDepth, c, alpha, beta);
+                int value = evaluateMoveB(depth + 1, maxDepth, c, alpha, beta);
                 board.unset(c);
                 if (value < min) {
                     min = value;
@@ -119,11 +120,11 @@ public class MiniMaxPlayer extends BaseComputerPlayer {
         return min;
     }
 
-    private int evaluateBlackMove(int depth, int maxDepth, int col, int alpha, int beta) {
+    private int evaluateMoveB(int depth, int maxDepth, int col, int alpha, int beta) {
         int max = Integer.MIN_VALUE, score = 0;
         if (col != -1) {
             score = getHeuristicScore(PLAYER_A, col, depth);
-            if (redWinDetected) {
+            if (winDetectedA) {
                 winFoundA = true;
                 return score;
             }
@@ -134,7 +135,7 @@ public class MiniMaxPlayer extends BaseComputerPlayer {
         for (int c : shuffleArray(BOARD_COLUMNS)) {
             if (board.canPlace(c)) {
                 board.dropPiece(PLAYER_B, c);
-                int value = evaluateRedMove(depth + 1, maxDepth, c, alpha, beta);
+                int value = evaluateMoveA(depth + 1, maxDepth, c, alpha, beta);
                 board.unset(c);
                 if (value > max) {
                     max = value;
@@ -158,12 +159,12 @@ public class MiniMaxPlayer extends BaseComputerPlayer {
 
     private Pair commonResult(int countA, int countB, int depth) {
         if (countA >= GOAL_TO_WIN) {
-            redWinDetected = true;
+            winDetectedA = true;
             if (depth <= THRESHOLD_DEPTH) {
                 return new Pair(true, Integer.MIN_VALUE + 1);
             }
         } else if (countB >= GOAL_TO_WIN) {
-            blackWinDetected = true;
+            winDetectedB = true;
             if (depth <= THRESHOLD_DEPTH) {
                 return new Pair(true, Integer.MAX_VALUE - 1);
             }
@@ -284,7 +285,7 @@ public class MiniMaxPlayer extends BaseComputerPlayer {
 
     private int getHeuristicScore(GridType player, int col, int depth) {
         int score = 0;
-        redWinDetected = blackWinDetected = false;
+        winDetectedA = winDetectedB = false;
 
         Pair rowResult = calcRowScore(player, col, depth);
         if (rowResult.finished) {
@@ -313,22 +314,22 @@ public class MiniMaxPlayer extends BaseComputerPlayer {
         return score;
     }
 
-    private int getScoreIncrement(int redCount, int blackCount, GridType player) {
-        if (redCount == blackCount) {
+    private int getScoreIncrement(int countA, int countB, GridType player) {
+        if (countA == countB) {
             if (player == PLAYER_A) {
                 return -1;
             }
             return 1;
-        } else if (redCount < blackCount) {
+        } else if (countA < countB) {
             if (player == PLAYER_A) {
-                return INCREMENT[blackCount] - INCREMENT[redCount];
+                return INCREMENT[countB] - INCREMENT[countA];
             }
-            return INCREMENT[blackCount + 1] - INCREMENT[redCount];
+            return INCREMENT[countB + 1] - INCREMENT[countA];
         } else {
             if (player == PLAYER_A) {
-                return -INCREMENT[redCount + 1] + INCREMENT[blackCount];
+                return -INCREMENT[countA + 1] + INCREMENT[countB];
             }
-            return -INCREMENT[redCount] + INCREMENT[blackCount];
+            return -INCREMENT[countA] + INCREMENT[countB];
         }
     }
 
