@@ -8,6 +8,7 @@ import connect4.board.GridType;
 import java.util.stream.IntStream;
 
 import static connect4.Options.*;
+import static connect4.Utils.randomDouble;
 import static connect4.Utils.randomInt;
 import static connect4.board.GridType.PLAYER_A;
 import static connect4.board.GridType.PLAYER_B;
@@ -25,15 +26,17 @@ public class MiniMaxPlayer extends BaseComputerPlayer {
     private boolean winFoundA, winFoundB;
     private boolean winDetectedA, winDetectedB;
 
-    //private static final int[] INCREMENT = {0, 1, 4, 32, 128, 512};
-    private static final int[] INCREMENT = {0, 1, 10, 100, 1000, 10000};
+        private static final int[] INCREMENT = {0, 1, 4, 32, 128, 512};
+//    private static final int[] INCREMENT = {0, 1, 100, 10000, 1000000, 100000000};
     private static final int MAX_TEST_STEPS = 4;
     private static final int THRESHOLD_DEPTH = 2;
 
     private int maxDepth;
+    private double heuristicProb;
 
-    public MiniMaxPlayer(int thinkingDepth) {
+    public MiniMaxPlayer(int thinkingDepth, double acceptProb) {
         maxDepth = thinkingDepth;
+        heuristicProb = acceptProb;
     }
 
     public int alphaBeta(GridType player, Board board) {
@@ -105,7 +108,7 @@ public class MiniMaxPlayer extends BaseComputerPlayer {
                         column = c;
                     }
                 }
-                if (value < beta) {
+                if (value < beta || randomDouble() < heuristicProb) {
                     beta = value;
                 }
                 if (alpha >= beta) {
@@ -143,7 +146,7 @@ public class MiniMaxPlayer extends BaseComputerPlayer {
                         column = c;
                     }
                 }
-                if (value > alpha) {
+                if (value > alpha || randomDouble() < heuristicProb) {
                     alpha = value;
                 }
                 if (alpha >= beta) {

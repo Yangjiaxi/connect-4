@@ -21,6 +21,11 @@ public class Utils {
         return random.nextInt(upperRange);
     }
 
+    public static double randomDouble() {
+        Random random = new Random();
+        return random.nextDouble();
+    }
+
     public static String strCenter(String s, int size) {
         return strCenter(s, size, ' ', ' ');
     }

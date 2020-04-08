@@ -27,6 +27,7 @@ import java.util.ArrayList;
 
 import static connect4.Utils.strCenter;
 import static connect4.render.UiGlobal.*;
+import static connect4.Options.*;
 import static org.hexworks.zircon.api.ComponentDecorations.box;
 import static org.hexworks.zircon.api.Components.label;
 import static org.hexworks.zircon.api.Components.vbox;
@@ -221,11 +222,11 @@ public class GameView extends BaseView {
             case RNG:
                 return new RandomComputerPlayer();
             case MiniMaxEasy:
-                return new MiniMaxPlayer(3);
+                return new MiniMaxPlayer(EASY_AI_DEPTH, EASY_AI_ERROR_RATE);
             case MiniMaxNormal:
-                return new MiniMaxPlayer(5);
+                return new MiniMaxPlayer(NORMAL_AI_DEPTH, NORMAL_AI_ERROR_RATE);
             case MiniMaxHard:
-                return new MiniMaxPlayer(10);
+                return new MiniMaxPlayer(HARD_AI_DEPTH, HARD_AI_ERROR_RATE);
             default:
         }
         return new HumanPlayer();
