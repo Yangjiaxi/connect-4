@@ -26,8 +26,11 @@ public class MiniMaxPlayer extends BaseComputerPlayer {
     private boolean winFoundA, winFoundB;
     private boolean winDetectedA, winDetectedB;
 
-        private static final int[] INCREMENT = {0, 1, 4, 32, 128, 512};
-//    private static final int[] INCREMENT = {0, 1, 100, 10000, 1000000, 100000000};
+    /**
+     * another optional:
+     * private static final int[] INCREMENT = {0, 1, 100, 10000, 1000000, 100000000};
+     */
+    private static final int[] INCREMENT = {0, 1, 4, 32, 128, 512};
     private static final int MAX_TEST_STEPS = 4;
     private static final int THRESHOLD_DEPTH = 2;
 
