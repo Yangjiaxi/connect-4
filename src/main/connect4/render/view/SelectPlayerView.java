@@ -2,7 +2,6 @@ package connect4.render.view;
 
 import connect4.Utils;
 import connect4.render.UiGlobal;
-import org.hexworks.zircon.api.Components;
 import org.hexworks.zircon.api.component.*;
 import org.hexworks.zircon.api.graphics.BoxType;
 import org.hexworks.zircon.api.grid.TileGrid;
@@ -22,9 +21,10 @@ import static org.hexworks.zircon.api.color.ANSITileColor.BRIGHT_RED;
 
 public class SelectPlayerView extends BaseView {
 
-    public Button backButton;
-    public Button startButton;
-    public RadioButtonGroup groupA, groupB;
+    public final Button backButton;
+    public final Button startButton;
+    public final RadioButtonGroup groupA;
+    public final RadioButtonGroup groupB;
 
     public SelectPlayerView(@NotNull TileGrid tileGrid, @NotNull ColorTheme theme) {
         super(tileGrid, theme);

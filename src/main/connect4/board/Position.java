@@ -5,8 +5,8 @@ package connect4.board;
  * Coordinate
  */
 public class Position {
-    int row;
-    int col;
+    final int row;
+    final int col;
 
     public Position(int row, int col) {
         this.row = row;

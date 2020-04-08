@@ -22,9 +22,9 @@ import static org.hexworks.zircon.api.color.ANSITileColor.*;
  */
 
 public class WelcomeView extends BaseView {
-    public Button newGameButton;
-    public Button aboutButton;
-    public Button exitButton;
+    public final Button newGameButton;
+    public final Button aboutButton;
+    public final Button exitButton;
 
     public WelcomeView(@NotNull TileGrid tileGrid, @NotNull ColorTheme theme) {
         super(tileGrid, theme);

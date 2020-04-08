@@ -22,7 +22,7 @@ import static org.hexworks.zircon.api.color.ANSITileColor.BRIGHT_RED;
  * @author yang
  */
 public class AboutView extends BaseView {
-    public Button backButton;
+    public final Button backButton;
 
     public AboutView(@NotNull TileGrid tileGrid, @NotNull ColorTheme theme) {
         super(tileGrid, theme);

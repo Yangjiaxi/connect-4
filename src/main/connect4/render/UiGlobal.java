@@ -28,22 +28,22 @@ public class UiGlobal {
     /**
      * Height of window
      */
-    public static int FRAME_HEIGHT = 24;
+    public static final int FRAME_HEIGHT = 24;
     /**
      * Width of window
      */
-    public static int FRAME_WIDTH = 27;
+    public static final int FRAME_WIDTH = 27;
     /**
      * Size of disc
      */
-    public static int UNIT_SIZE = 3;
+    public static final int UNIT_SIZE = 3;
 
-    public static int ACTION_LABEL_WIDTH = 14;
-    public static int ACTION_BORDER_WIDTH = 2;
-    public static int ACTION_TEXT_WIDTH = ACTION_LABEL_WIDTH - ACTION_BORDER_WIDTH;
+    public static final int ACTION_LABEL_WIDTH = 14;
+    public static final int ACTION_BORDER_WIDTH = 2;
+    public static final int ACTION_TEXT_WIDTH = ACTION_LABEL_WIDTH - ACTION_BORDER_WIDTH;
 
-    public static ColorTheme THEME_ORIGIN = ColorThemes.techLight();
-    public static ColorTheme THEME_AFTER = ColorThemes.gamebookers();
+    public static final ColorTheme THEME_ORIGIN = ColorThemes.techLight();
+    public static final ColorTheme THEME_AFTER = ColorThemes.gamebookers();
 
     public static final ANSITileColor PLAYER_A_COLOR = ANSITileColor.BRIGHT_YELLOW;
     public static final ANSITileColor PLAYER_B_COLOR = ANSITileColor.BRIGHT_BLUE;
@@ -52,7 +52,7 @@ public class UiGlobal {
     // public static ColorTheme THEME_ORIGIN = ColorThemes.solarizedDarkBlue();
     // public static ColorTheme THEME_AFTER = ColorThemes.techLight();
 
-    public static Size GRID_SIZE = Size.create(FRAME_WIDTH, FRAME_HEIGHT);
+    public static final Size GRID_SIZE = Size.create(FRAME_WIDTH, FRAME_HEIGHT);
 
     public static final Character[] OPTIONAL_CHARS = {'X', 'O', '☺', '☻', '♥', '♦', '♣', '♠', '♂', '♀', '▲', '▼', '█'};
 

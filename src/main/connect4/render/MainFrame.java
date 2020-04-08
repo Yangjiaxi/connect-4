@@ -16,11 +16,11 @@ import org.hexworks.zircon.api.view.base.BaseView;
  * @author yang
  */
 public class MainFrame {
-    WelcomeView welcome;
-    AboutView about;
-    GameView game;
-    SelectPlayerView player;
-    SelectCharView character;
+    final WelcomeView welcome;
+    final AboutView about;
+    final GameView game;
+    final SelectPlayerView player;
+    final SelectCharView character;
 
     public MainFrame() {
         TileGrid tileGrid = UiGlobal.startTileGrid("Connect-4");

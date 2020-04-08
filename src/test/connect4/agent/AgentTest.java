@@ -33,37 +33,19 @@ public class AgentTest {
 //    }
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         pa = new HumanPlayer();
         pb = new HumanPlayer();
-        testObj = new Agent(pa,pb);
+        testObj = new Agent(pa, pb);
         testObj.initBoard();
         testObj.initState();
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         pa = null;
         pb = null;
         testObj = null;
-    }
-
-    //黑盒(?)测试: checkOneDir()
-    @Ignore
-    @Test(expected=java.lang.NullPointerException.class) //checkOneDir()只有在下子之后才会触发，故未下子时move为空
-    public void testCheckOneDir0() {
-        //尚未落子，横、纵、斜向均未"connect"
-        assertFalse(testObj.checkOneDir(null,0,1,GridType.PLAYER_A));
-        assertFalse(testObj.checkOneDir(null,0,1,GridType.PLAYER_B));
-
-        assertFalse(testObj.checkOneDir(null,1,0,GridType.PLAYER_A));
-        assertFalse(testObj.checkOneDir(null,1,0,GridType.PLAYER_B));
-
-        assertFalse(testObj.checkOneDir(null,1,1,GridType.PLAYER_A));
-        assertFalse(testObj.checkOneDir(null,1,1,GridType.PLAYER_B));
-
-        assertFalse(testObj.checkOneDir(null,-1,1,GridType.PLAYER_A));
-        assertFalse(testObj.checkOneDir(null,-1,1,GridType.PLAYER_B));
     }
 
     @Category(EC.class)
@@ -72,8 +54,8 @@ public class AgentTest {
         //只落一子，横向未"connect"
         Board innerBoard = testObj.getBoard();
         Position lastMove = innerBoard.dropPiece(GridType.PLAYER_A, 0);
-        assertFalse(testObj.checkOneDir(lastMove,0,1,GridType.PLAYER_A));
-        assertFalse(testObj.checkOneDir(lastMove,0,1,GridType.PLAYER_B));
+        assertFalse(testObj.checkOneDir(lastMove, 0, 1, GridType.PLAYER_A));
+        assertFalse(testObj.checkOneDir(lastMove, 0, 1, GridType.PLAYER_B));
     }
 
     @Category(EC.class)
@@ -88,11 +70,11 @@ public class AgentTest {
         innerBoard.dropPiece(GridType.PLAYER_B, 1);
 
         Position lastMove = innerBoard.dropPiece(GridType.PLAYER_A, 0);
-        assertFalse(testObj.checkOneDir(lastMove,0,1,GridType.PLAYER_A));
-        assertFalse(testObj.checkOneDir(lastMove,0,1,GridType.PLAYER_B));
+        assertFalse(testObj.checkOneDir(lastMove, 0, 1, GridType.PLAYER_A));
+        assertFalse(testObj.checkOneDir(lastMove, 0, 1, GridType.PLAYER_B));
     }
 
-    @Category({BVT.class,EC.class})
+    @Category({BVT.class, EC.class})
     @Test
     public void testCheckOneDir12() {
         //落下数子，横向"connect" (左下边界)
@@ -106,8 +88,8 @@ public class AgentTest {
         innerBoard.dropPiece(GridType.PLAYER_B, 2);
 
         Position lastMove = innerBoard.dropPiece(GridType.PLAYER_A, 0);
-        assertTrue(testObj.checkOneDir(lastMove,0,1,GridType.PLAYER_A));
-        assertFalse(testObj.checkOneDir(lastMove,0,1,GridType.PLAYER_B));
+        assertTrue(testObj.checkOneDir(lastMove, 0, 1, GridType.PLAYER_A));
+        assertFalse(testObj.checkOneDir(lastMove, 0, 1, GridType.PLAYER_B));
     }
 
     @Category(BVT.class)
@@ -124,8 +106,8 @@ public class AgentTest {
         innerBoard.dropPiece(GridType.PLAYER_B, 5);
 
         Position lastMove = innerBoard.dropPiece(GridType.PLAYER_A, 6);
-        assertTrue(testObj.checkOneDir(lastMove,0,1,GridType.PLAYER_A));
-        assertFalse(testObj.checkOneDir(lastMove,0,1,GridType.PLAYER_B));
+        assertTrue(testObj.checkOneDir(lastMove, 0, 1, GridType.PLAYER_A));
+        assertFalse(testObj.checkOneDir(lastMove, 0, 1, GridType.PLAYER_B));
     }
 
     @Category(BVT.class)
@@ -162,8 +144,8 @@ public class AgentTest {
         innerBoard.dropPiece(GridType.PLAYER_B, 4);
 
         Position lastMove = innerBoard.dropPiece(GridType.PLAYER_A, 0);
-        assertTrue(testObj.checkOneDir(lastMove,0,1,GridType.PLAYER_A));
-        assertFalse(testObj.checkOneDir(lastMove,0,1,GridType.PLAYER_B));
+        assertTrue(testObj.checkOneDir(lastMove, 0, 1, GridType.PLAYER_A));
+        assertFalse(testObj.checkOneDir(lastMove, 0, 1, GridType.PLAYER_B));
     }
 
     @Category(BVT.class)
@@ -200,8 +182,8 @@ public class AgentTest {
         innerBoard.dropPiece(GridType.PLAYER_B, 2);
 
         Position lastMove = innerBoard.dropPiece(GridType.PLAYER_A, 6);
-        assertTrue(testObj.checkOneDir(lastMove,0,1,GridType.PLAYER_A));
-        assertFalse(testObj.checkOneDir(lastMove,0,1,GridType.PLAYER_B));
+        assertTrue(testObj.checkOneDir(lastMove, 0, 1, GridType.PLAYER_A));
+        assertFalse(testObj.checkOneDir(lastMove, 0, 1, GridType.PLAYER_B));
     }
 
     @Category(EC.class)
@@ -210,8 +192,8 @@ public class AgentTest {
         //只落一子，纵向未"connect"
         Board innerBoard = testObj.getBoard();
         Position lastMove = innerBoard.dropPiece(GridType.PLAYER_A, 0);
-        assertFalse(testObj.checkOneDir(lastMove,1,0,GridType.PLAYER_A));
-        assertFalse(testObj.checkOneDir(lastMove,1,0,GridType.PLAYER_B));
+        assertFalse(testObj.checkOneDir(lastMove, 1, 0, GridType.PLAYER_A));
+        assertFalse(testObj.checkOneDir(lastMove, 1, 0, GridType.PLAYER_B));
     }
 
     @Category(EC.class)
@@ -226,11 +208,11 @@ public class AgentTest {
         innerBoard.dropPiece(GridType.PLAYER_B, 1);
 
         Position lastMove = innerBoard.dropPiece(GridType.PLAYER_A, 0);
-        assertFalse(testObj.checkOneDir(lastMove,1,0,GridType.PLAYER_A));
-        assertFalse(testObj.checkOneDir(lastMove,1,0,GridType.PLAYER_B));
+        assertFalse(testObj.checkOneDir(lastMove, 1, 0, GridType.PLAYER_A));
+        assertFalse(testObj.checkOneDir(lastMove, 1, 0, GridType.PLAYER_B));
     }
 
-    @Category({BVT.class,EC.class})
+    @Category({BVT.class, EC.class})
     @Test
     public void testCheckOneDir22() {
         //落下数子，纵向"connect" (左下边界)
@@ -244,8 +226,8 @@ public class AgentTest {
         innerBoard.dropPiece(GridType.PLAYER_B, 1);
 
         Position lastMove = innerBoard.dropPiece(GridType.PLAYER_A, 0);
-        assertTrue(testObj.checkOneDir(lastMove,1,0,GridType.PLAYER_A));
-        assertFalse(testObj.checkOneDir(lastMove,1,0,GridType.PLAYER_B));
+        assertTrue(testObj.checkOneDir(lastMove, 1, 0, GridType.PLAYER_A));
+        assertFalse(testObj.checkOneDir(lastMove, 1, 0, GridType.PLAYER_B));
     }
 
     @Category(BVT.class)
@@ -266,8 +248,8 @@ public class AgentTest {
         innerBoard.dropPiece(GridType.PLAYER_B, 1);
 
         Position lastMove = innerBoard.dropPiece(GridType.PLAYER_A, 0);
-        assertTrue(testObj.checkOneDir(lastMove,1,0,GridType.PLAYER_A));
-        assertFalse(testObj.checkOneDir(lastMove,1,0,GridType.PLAYER_B));
+        assertTrue(testObj.checkOneDir(lastMove, 1, 0, GridType.PLAYER_A));
+        assertFalse(testObj.checkOneDir(lastMove, 1, 0, GridType.PLAYER_B));
     }
 
     @Category(BVT.class)
@@ -284,8 +266,8 @@ public class AgentTest {
         innerBoard.dropPiece(GridType.PLAYER_B, 5);
 
         Position lastMove = innerBoard.dropPiece(GridType.PLAYER_A, 6);
-        assertTrue(testObj.checkOneDir(lastMove,1,0,GridType.PLAYER_A));
-        assertFalse(testObj.checkOneDir(lastMove,1,0,GridType.PLAYER_B));
+        assertTrue(testObj.checkOneDir(lastMove, 1, 0, GridType.PLAYER_A));
+        assertFalse(testObj.checkOneDir(lastMove, 1, 0, GridType.PLAYER_B));
     }
 
     @Category(BVT.class)
@@ -306,8 +288,8 @@ public class AgentTest {
         innerBoard.dropPiece(GridType.PLAYER_B, 5);
 
         Position lastMove = innerBoard.dropPiece(GridType.PLAYER_A, 6);
-        assertTrue(testObj.checkOneDir(lastMove,1,0,GridType.PLAYER_A));
-        assertFalse(testObj.checkOneDir(lastMove,1,0,GridType.PLAYER_B));
+        assertTrue(testObj.checkOneDir(lastMove, 1, 0, GridType.PLAYER_A));
+        assertFalse(testObj.checkOneDir(lastMove, 1, 0, GridType.PLAYER_B));
     }
 
     @Category(EC.class)
@@ -316,8 +298,8 @@ public class AgentTest {
         //只落一子，斜向(仰斜)未"connect"
         Board innerBoard = testObj.getBoard();
         Position lastMove = innerBoard.dropPiece(GridType.PLAYER_A, 0);
-        assertFalse(testObj.checkOneDir(lastMove,-1,1,GridType.PLAYER_A));
-        assertFalse(testObj.checkOneDir(lastMove,-1,1,GridType.PLAYER_B));
+        assertFalse(testObj.checkOneDir(lastMove, -1, 1, GridType.PLAYER_A));
+        assertFalse(testObj.checkOneDir(lastMove, -1, 1, GridType.PLAYER_B));
     }
 
     @Category(EC.class)
@@ -332,11 +314,11 @@ public class AgentTest {
         innerBoard.dropPiece(GridType.PLAYER_B, 1);
 
         Position lastMove = innerBoard.dropPiece(GridType.PLAYER_A, 0);
-        assertFalse(testObj.checkOneDir(lastMove,-1,1,GridType.PLAYER_A));
-        assertFalse(testObj.checkOneDir(lastMove,-1,1,GridType.PLAYER_B));
+        assertFalse(testObj.checkOneDir(lastMove, -1, 1, GridType.PLAYER_A));
+        assertFalse(testObj.checkOneDir(lastMove, -1, 1, GridType.PLAYER_B));
     }
 
-    @Category({BVT.class,EC.class})
+    @Category({BVT.class, EC.class})
     @Test
     public void testCheckOneDir32() {
         //落下数子，斜向(仰斜)"connect" (左下边界)
@@ -354,8 +336,8 @@ public class AgentTest {
         innerBoard.dropPiece(GridType.PLAYER_B, 0);
 
         Position lastMove = innerBoard.dropPiece(GridType.PLAYER_A, 3);
-        assertTrue(testObj.checkOneDir(lastMove,-1,1,GridType.PLAYER_A));
-        assertFalse(testObj.checkOneDir(lastMove,-1,1,GridType.PLAYER_B));
+        assertTrue(testObj.checkOneDir(lastMove, -1, 1, GridType.PLAYER_A));
+        assertFalse(testObj.checkOneDir(lastMove, -1, 1, GridType.PLAYER_B));
     }
 
     @Category(BVT.class)
@@ -384,8 +366,8 @@ public class AgentTest {
         innerBoard.dropPiece(GridType.PLAYER_B, 6);
 
         Position lastMove = innerBoard.dropPiece(GridType.PLAYER_A, 6);
-        assertTrue(testObj.checkOneDir(lastMove,-1,1,GridType.PLAYER_A));
-        assertFalse(testObj.checkOneDir(lastMove,-1,1,GridType.PLAYER_B));
+        assertTrue(testObj.checkOneDir(lastMove, -1, 1, GridType.PLAYER_A));
+        assertFalse(testObj.checkOneDir(lastMove, -1, 1, GridType.PLAYER_B));
     }
 
     @Category(EC.class)
@@ -394,8 +376,8 @@ public class AgentTest {
         //只落一子，斜向(俯斜)未"connect"
         Board innerBoard = testObj.getBoard();
         Position lastMove = innerBoard.dropPiece(GridType.PLAYER_A, 0);
-        assertFalse(testObj.checkOneDir(lastMove,1,1,GridType.PLAYER_A));
-        assertFalse(testObj.checkOneDir(lastMove,1,1,GridType.PLAYER_B));
+        assertFalse(testObj.checkOneDir(lastMove, 1, 1, GridType.PLAYER_A));
+        assertFalse(testObj.checkOneDir(lastMove, 1, 1, GridType.PLAYER_B));
     }
 
     @Category(EC.class)
@@ -410,11 +392,11 @@ public class AgentTest {
         innerBoard.dropPiece(GridType.PLAYER_B, 1);
 
         Position lastMove = innerBoard.dropPiece(GridType.PLAYER_A, 0);
-        assertFalse(testObj.checkOneDir(lastMove,1,1,GridType.PLAYER_A));
-        assertFalse(testObj.checkOneDir(lastMove,1,1,GridType.PLAYER_B));
+        assertFalse(testObj.checkOneDir(lastMove, 1, 1, GridType.PLAYER_A));
+        assertFalse(testObj.checkOneDir(lastMove, 1, 1, GridType.PLAYER_B));
     }
 
-    @Category({BVT.class,EC.class})
+    @Category({BVT.class, EC.class})
     @Test
     public void testCheckOneDir42() {
         //落下数子，斜向(俯斜)"connect" (左上边界)
@@ -440,8 +422,8 @@ public class AgentTest {
         innerBoard.dropPiece(GridType.PLAYER_B, 1);
 
         Position lastMove = innerBoard.dropPiece(GridType.PLAYER_A, 0);
-        assertTrue(testObj.checkOneDir(lastMove,1,1,GridType.PLAYER_A));
-        assertFalse(testObj.checkOneDir(lastMove,1,1,GridType.PLAYER_B));
+        assertTrue(testObj.checkOneDir(lastMove, 1, 1, GridType.PLAYER_A));
+        assertFalse(testObj.checkOneDir(lastMove, 1, 1, GridType.PLAYER_B));
     }
 
     @Category(BVT.class)
@@ -464,20 +446,20 @@ public class AgentTest {
         innerBoard.dropPiece(GridType.PLAYER_B, 3);
 
         Position lastMove = innerBoard.dropPiece(GridType.PLAYER_A, 3);
-        assertTrue(testObj.checkOneDir(lastMove,1,1,GridType.PLAYER_A));
-        assertFalse(testObj.checkOneDir(lastMove,1,1,GridType.PLAYER_B));
+        assertTrue(testObj.checkOneDir(lastMove, 1, 1, GridType.PLAYER_A));
+        assertFalse(testObj.checkOneDir(lastMove, 1, 1, GridType.PLAYER_B));
     }
 
     //白盒测试: checkBoard()
     //对判定的测试
     @Ignore
-    @Test(expected=java.lang.NullPointerException.class) //checkBoard()只有在下子之后才会触发，故未下子时lastMove为空
+    @Test(expected = java.lang.NullPointerException.class) //checkBoard()只有在下子之后才会触发，故未下子时lastMove为空
     //未下子时,游戏尚未结束,board状态为初始值(ready)
     public void testCheckBoard0() {
-        testObj.checkBoard(GridType.PLAYER_A,null);
-        assertEquals(testObj.getState(),AgentState.READY);
-        testObj.checkBoard(GridType.PLAYER_B,null);
-        assertEquals(testObj.getState(),AgentState.READY);
+        testObj.checkBoard(GridType.PLAYER_A, null);
+        assertEquals(testObj.getState(), AgentState.READY);
+        testObj.checkBoard(GridType.PLAYER_B, null);
+        assertEquals(testObj.getState(), AgentState.READY);
     }
 
     @Category(LC.class)
@@ -491,8 +473,8 @@ public class AgentTest {
         innerBoard.dropPiece(GridType.PLAYER_A, 2);
         Position lastMove = innerBoard.dropPiece(GridType.PLAYER_B, 3);
 
-        testObj.checkBoard(GridType.PLAYER_B,lastMove);
-        assertEquals(testObj.getState(),AgentState.READY);
+        testObj.checkBoard(GridType.PLAYER_B, lastMove);
+        assertEquals(testObj.getState(), AgentState.READY);
     }
 
     @Category(LC.class)
@@ -510,8 +492,8 @@ public class AgentTest {
 
         Position lastMove = innerBoard.dropPiece(GridType.PLAYER_A, 0);
 
-        testObj.checkBoard(GridType.PLAYER_A,lastMove);
-        assertEquals(testObj.getState(),AgentState.WIN);
+        testObj.checkBoard(GridType.PLAYER_A, lastMove);
+        assertEquals(testObj.getState(), AgentState.WIN);
     }
 
     @Category(LC.class)
@@ -528,8 +510,8 @@ public class AgentTest {
         innerBoard.dropPiece(GridType.PLAYER_B, 1);
         Position lastMove = innerBoard.dropPiece(GridType.PLAYER_A, 0);
 
-        testObj.checkBoard(GridType.PLAYER_A,lastMove);
-        assertEquals(testObj.getState(),AgentState.WIN);
+        testObj.checkBoard(GridType.PLAYER_A, lastMove);
+        assertEquals(testObj.getState(), AgentState.WIN);
     }
 
     @Category(LC.class)
@@ -550,8 +532,8 @@ public class AgentTest {
         innerBoard.dropPiece(GridType.PLAYER_B, 0);
         Position lastMove = innerBoard.dropPiece(GridType.PLAYER_A, 3);
 
-        testObj.checkBoard(GridType.PLAYER_A,lastMove);
-        assertEquals(testObj.getState(),AgentState.WIN);
+        testObj.checkBoard(GridType.PLAYER_A, lastMove);
+        assertEquals(testObj.getState(), AgentState.WIN);
     }
 
     @Category(LC.class)
@@ -574,8 +556,8 @@ public class AgentTest {
         innerBoard.dropPiece(GridType.PLAYER_B, 3);
         Position lastMove = innerBoard.dropPiece(GridType.PLAYER_A, 3);
 
-        testObj.checkBoard(GridType.PLAYER_A,lastMove);
-        assertEquals(testObj.getState(),AgentState.WIN);
+        testObj.checkBoard(GridType.PLAYER_A, lastMove);
+        assertEquals(testObj.getState(), AgentState.WIN);
     }
 
 }
