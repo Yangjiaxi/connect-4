@@ -871,6 +871,7 @@ public class RandomComputerPlayerTest {
     }
 
     @Category({EC.class, BVT.class})
+    @Ignore
     @Test
     public void testAskNextType8() {
         //满盘时下一子不出现

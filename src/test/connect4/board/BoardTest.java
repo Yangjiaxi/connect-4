@@ -147,8 +147,8 @@ public class BoardTest {
         assertEquals(GridType.PLAYER_B, testobj.getGrid(5, 5).getType());
     }
     
-    /**
-     * connect-4-dev2 test contents↓
+    /*
+      connect-4-dev2 test contents↓
      */
     
     /**

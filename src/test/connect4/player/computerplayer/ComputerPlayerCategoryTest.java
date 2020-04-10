@@ -11,7 +11,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Categories.class)
 @Categories.IncludeCategory({BVT.class, EC.class, IPT.class, LC.class})
-@Suite.SuiteClasses({RandomComputerPlayerTest.class})
-public class RandomComputerPlayerCategoryTest {
+@Suite.SuiteClasses({RandomComputerPlayerTest.class, MiniMaxPlayerTest.class})
+public class ComputerPlayerCategoryTest {
 
 }

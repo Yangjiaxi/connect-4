@@ -5,13 +5,13 @@ import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 
-public class RandomComputerPlayerTestRunner {
+public class ComputerPlayerTestRunner {
     public static void main(String[] args) {
-        Result result = JUnitCore.runClasses(RandomComputerPlayerTest.class);
+        Result result = JUnitCore.runClasses(RandomComputerPlayerTest.class, MiniMaxPlayerTest.class);
 
         System.out.println("=================== Test Report ===================");
         System.out.println("\033[35;4m" + "Run " + result.getRunCount() + " test cases, Ignore " +
-                result.getIgnoreCount() +" test cases" + "\033[0m");
+                result.getIgnoreCount() + " test cases" + "\033[0m");
 
         for (Failure fail : result.getFailures()) {
             System.out.println("\033[31;4m" + fail.toString() + "\033[0m");

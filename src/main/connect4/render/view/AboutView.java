@@ -22,16 +22,6 @@ import static org.hexworks.zircon.api.color.ANSITileColor.BRIGHT_RED;
 public class AboutView extends BaseView {
     public final Button backButton;
 
-    private final String[][] memberInfo = new String[][]{
-            {"Yang Jiaxi", "Yangjiaxi"},
-            {"Tian Yize", "Osyruz"},
-            {"Chen Liwei", "Penistrong"},
-            {"Luo Aojie", "Aoki12138"},
-            {"Cheng Li", "mercyyyyy"}};
-
-    private final int NAME_PAD_LEFT = 5;
-    private final int ACCOUNT_PAD_LEFT = 9;
-
     public AboutView(@NotNull TileGrid tileGrid, @NotNull ColorTheme theme) {
         super(tileGrid, theme);
 
@@ -47,16 +37,24 @@ public class AboutView extends BaseView {
                 .withAlignmentWithin(getScreen(), ComponentAlignment.BOTTOM_RIGHT)
                 .build();
 
+        String[][] memberInfo = new String[][]{
+                {"Yang Jiaxi", "Yangjiaxi"},
+                {"Tian Yize", "Osyruz"},
+                {"Chen Liwei", "Penistrong"},
+                {"Luo Aojie", "Aoki12138"},
+                {"Cheng Li", "mercyyyyy"}};
         String name = memberInfo[0][0];
         String account = memberInfo[0][1];
 
+        int namePadLeft = 5;
         Label last = label().withText("> " + name)
-                .withPosition(NAME_PAD_LEFT, logo.getSize().getHeight() + 1)
+                .withPosition(namePadLeft, logo.getSize().getHeight() + 1)
                 .build();
         getScreen().addComponents(last);
 
+        int accountPadLeft = 9;
         last = label().withText("@" + account)
-                .withPosition(ACCOUNT_PAD_LEFT,
+                .withPosition(accountPadLeft,
                         last.getPosition().getY() + last.getSize().getHeight())
                 .build();
         getScreen().addComponents(last);
@@ -65,12 +63,12 @@ public class AboutView extends BaseView {
             name = memberInfo[i][0];
             account = memberInfo[i][1];
             last = label().withText("> " + name)
-                    .withPosition(NAME_PAD_LEFT, last.getPosition().getY() + last.getSize().getHeight() + 1)
+                    .withPosition(namePadLeft, last.getPosition().getY() + last.getSize().getHeight() + 1)
                     .build();
             getScreen().addComponents(last);
 
             last = label().withText("@" + account)
-                    .withPosition(ACCOUNT_PAD_LEFT,
+                    .withPosition(accountPadLeft,
                             last.getPosition().getY() + last.getSize().getHeight())
                     .build();
             getScreen().addComponents(last);
